@@ -6,15 +6,15 @@ using UnityEngine;
 public class PlayerRaycast : MonoBehaviour
 {
     public event Action<TestScale> OnMouseOverScalableObject;
-    [SerializeField] Transform playerTransform;
+    [SerializeField] Transform cameraRoot;
     [SerializeField] float checkForObjectDistance;
     [SerializeField] LayerMask layerMask;
 
     private void Update()
     {
-        Debug.DrawLine(transform.position, transform.position + (playerTransform.forward).normalized * checkForObjectDistance, Color.red);
+        Debug.DrawLine(cameraRoot.transform.position, transform.position + (cameraRoot.forward).normalized * checkForObjectDistance, Color.red);
         RaycastHit hit;
-        Physics.Raycast(transform.position, playerTransform.forward, out hit, checkForObjectDistance, layerMask);
+        Physics.Raycast(cameraRoot.transform.position, cameraRoot.forward, out hit, checkForObjectDistance, layerMask);
         if (!hit.collider || !hit.collider.gameObject)
         {
             OnMouseOverScalableObject(null);
