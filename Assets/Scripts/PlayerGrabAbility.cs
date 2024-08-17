@@ -48,7 +48,7 @@ public class PlayerGrabAbility : MonoBehaviour
             {
                 DropObject();
             }
-            else if (currObject != null && currObject.GetMass() <= playerThresholds.getMaxCarryMass()) { 
+            else if (currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.getMaxCarryMass()) { 
                 GrabObject();
             }
         }
@@ -102,7 +102,7 @@ public class PlayerGrabAbility : MonoBehaviour
             if (objRb != null)
             {
                 objRb.isKinematic = false;
-                objRb.AddForce(holdPos.forward * throwForce, ForceMode.Impulse);
+                objRb.AddForce(holdPos.forward * PlayerThresholds.Instance.getThrowForce(), ForceMode.Impulse);
         }
 
             currObject.transform.SetParent(null);
