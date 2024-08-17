@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour
     const float gravity = 0.1f;
     float dynamicGravity;
     bool isGround;
+
     private void Update() 
     {
         movementDirection = new Vector3(Input.GetAxis("Horizontal"),-dynamicGravity,Input.GetAxis("Vertical"));

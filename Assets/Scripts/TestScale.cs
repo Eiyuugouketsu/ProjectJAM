@@ -6,6 +6,7 @@ public class TestScale : MonoBehaviour
 {
     [SerializeField] float scaleSpeed;
     [SerializeField] float minimumScale;
+    [SerializeField] Rigidbody rb;
     float scaleValue = 0;
     List<Transform> touchingObjects = new List<Transform>();
 
@@ -38,5 +39,10 @@ public class TestScale : MonoBehaviour
     {
         if(transform.localScale.x + scaleValue < minimumScale) return;
         transform.localScale = new Vector3(transform.localScale.x + scaleValue,transform.localScale.x + scaleValue,transform.localScale.x + scaleValue);
+    }
+
+    public float GetMass()
+    {
+        return rb.mass;
     }
 }
