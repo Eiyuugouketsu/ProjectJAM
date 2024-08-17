@@ -9,8 +9,14 @@ public class PlayerRaycast : MonoBehaviour
     [SerializeField] Transform cameraRoot;
     [SerializeField] float checkForObjectDistance;
     [SerializeField] LayerMask layerMask;
+    TestScale currentTarget;
 
     private void Update()
+    {
+        PerformRaycast();
+    }
+
+    public void PerformRaycast(bool forceUpdate = false)
     {
         Debug.DrawLine(cameraRoot.transform.position, transform.position + (cameraRoot.forward).normalized * checkForObjectDistance, Color.red);
         RaycastHit hit;
@@ -18,11 +24,15 @@ public class PlayerRaycast : MonoBehaviour
         if (!hit.collider || !hit.collider.gameObject)
         {
             OnMouseOverScalableObject(null);
+            currentTarget = null;
             return;
         }
         
         TestScale hitObject = hit.collider.gameObject.GetComponent<TestScale>();
-        // If affecting performance, cache the last value and only fire the event when getting a new value;
-        OnMouseOverScalableObject?.Invoke(hitObject);
+        if (currentTarget != hitObject || forceUpdate)
+        {
+            OnMouseOverScalableObject?.Invoke(hitObject);
+            currentTarget = hitObject;
+        }
     }
 }

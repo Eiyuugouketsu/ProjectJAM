@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerGrabAbility : MonoBehaviour
 {
+    public event Action<TestScale> OnObjectPickedUp;
+    public event Action OnObjectDropped;
     TestScale currObject;
     private PlayerRaycast playerRaycast;
     public bool isHoldingObject = false;
@@ -65,6 +68,7 @@ public class PlayerGrabAbility : MonoBehaviour
 
         currObject.transform.position = holdPos.position;
         currObject.transform.SetParent(holdPos);
+        OnObjectPickedUp(currObject);
     }
 
     private void DropObject()
@@ -79,6 +83,16 @@ public class PlayerGrabAbility : MonoBehaviour
         }
 
         currObject.transform.SetParent(null);
-       
+       OnObjectDropped?.Invoke();
+    }
+
+    public TestScale GetCurrentObject()
+    {
+        return currObject;
+    }
+
+    public bool GetIsHoldingObject()
+    {
+        return isHoldingObject;
     }
 }
