@@ -9,11 +9,10 @@ public class PlayerGrabAbility : MonoBehaviour
     public event Action OnObjectDropped;
     TestScale currObject;
     private PlayerRaycast playerRaycast;
+    PlayerThresholds playerThresholds;
     public bool isHoldingObject = false;
-    [SerializeField] private float maxMass = 100f;
     [SerializeField] private Transform holdPos;
-    [SerializeField] private float holdDistance = 2f;
-    [SerializeField] private float throwForce = 5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +48,7 @@ public class PlayerGrabAbility : MonoBehaviour
             {
                 DropObject();
             }
-            else if (currObject != null && currObject.GetMass() <= maxMass) { 
+            else if (currObject != null && currObject.GetMass() <= playerThresholds.getMaxCarryMass()) { 
                 GrabObject();
             }
         }
