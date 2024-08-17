@@ -36,16 +36,16 @@ public class TestScale : MonoBehaviour
         //}
     }
 
-    public void Grow()
+    public void Grow(float growAmount)
     {
         if (touchingObjects.Count <= 2) {
-            scaleValue += scaleSpeed * Time.deltaTime; 
+            scaleValue += growAmount * scaleSpeed; 
         }
     }
          
-    public void Shrink()
+    public void Shrink(float shrinkAmount)
     {
-        scaleValue -= scaleSpeed * Time.deltaTime;  
+        scaleValue -= shrinkAmount * scaleSpeed;
     }
 
      public void Stop()
@@ -61,5 +61,10 @@ public class TestScale : MonoBehaviour
     public float GetMass()
     {
         return rb.mass;
+    }
+
+    public float GetMinimumScale()
+    {
+        return minimumScale;
     }
 }

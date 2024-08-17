@@ -16,6 +16,10 @@ public class PlayerMode : MonoBehaviour
     private PlayerScalePower playerScalePower;
     private PlayerGrabAbility playerGrabAbility;
 
+    [SerializeField] Transform flashlightObjectTransform;
+    [SerializeField] Transform flashlightActiveTransform;
+    [SerializeField] Transform flashlightInactiveTransform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,12 +44,12 @@ public class PlayerMode : MonoBehaviour
             if (currentState == PlayerState.Grab)
             {
                 currentState = PlayerState.Scale;
-                //Debug.Log("Switched to Scale State");
+                Debug.Log("Switched to Scale State");
             }
             else if (currentState == PlayerState.Scale)
             {
                 currentState = PlayerState.Grab;
-                //Debug.Log("Switched to Grab State");
+                Debug.Log("Switched to Grab State");
             }
             UpdateState();
         }
@@ -57,12 +61,21 @@ public class PlayerMode : MonoBehaviour
         {
             playerGrabAbility.enabled = true;
             playerScalePower.enabled = false;
+            flashlightObjectTransform.localPosition = flashlightInactiveTransform.localPosition;
+            flashlightObjectTransform.localRotation = flashlightInactiveTransform.localRotation;
         }
         else if (currentState == PlayerState.Scale)
         {
             playerGrabAbility.enabled = false;
             playerScalePower.enabled = true;
+            flashlightObjectTransform.localPosition = flashlightActiveTransform.localPosition;
+            flashlightObjectTransform.localRotation = flashlightActiveTransform.localRotation;
         }
+    }
+
+    public PlayerState GetPlayerState()
+    {
+        return currentState;
     }
 
 }

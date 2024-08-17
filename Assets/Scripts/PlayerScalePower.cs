@@ -7,6 +7,8 @@ public class PlayerScalePower : MonoBehaviour
 {
     public event Action<float> OnUpdateScalePoints;
     [SerializeField] float startingScalePoints = 50f;
+    [SerializeField] float maxScalePoints = 100f;
+    [SerializeField] float scaleFactor = 100f;
     float currentScalePoints;
     TestScale currObject;
     private PlayerRaycast playerRaycast;
@@ -25,7 +27,7 @@ public class PlayerScalePower : MonoBehaviour
             playerRaycast.OnMouseOverScalableObject += HandleMouseOverScalableObject;
         }
 
-        OnUpdateScalePoints?.Invoke(currentScalePoints / 100f);
+        OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
     }
 
     private void HandleMouseOverScalableObject(TestScale scalableObject)
@@ -55,25 +57,36 @@ public class PlayerScalePower : MonoBehaviour
         
     }
 
-    // Temporary method to change scale points for testing
     private void GrowShrink()
     {
-            if (Input.GetMouseButton(0) && currentScalePoints < 100f)
-            {
-                currObject.Grow();
-                currentScalePoints += Time.deltaTime * 15f;
-            }
-            else if (Input.GetMouseButton(1) && currentScalePoints > 0f)
-            {
-                currObject.Shrink();
-                currentScalePoints -= Time.deltaTime * 15f;
-            } 
-            else
-            {
-                currObject.Stop();
-            }
-            
-            currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, 100f);
-            OnUpdateScalePoints?.Invoke(currentScalePoints / 100f);
+        if (Input.GetMouseButton(0) && currentScalePoints < maxScalePoints)
+        {
+            float growAmount = Mathf.Min(Time.deltaTime * scaleFactor, maxScalePoints - currentScalePoints);
+            currObject.Grow(growAmount / scaleFactor);
+            currentScalePoints += growAmount;
+        }
+        else if (Input.GetMouseButton(1) && currentScalePoints > 0f)
+        {
+            float shrinkAmount = Mathf.Min(Time.deltaTime * scaleFactor, currentScalePoints);
+            currObject.Shrink(shrinkAmount / scaleFactor);
+            currentScalePoints -= shrinkAmount;
+        } 
+        else
+        {
+            currObject.Stop();
+        }
+        
+        currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
+        OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
+    }
+
+    public float GetCurrentScalePoints()
+    {
+        return currentScalePoints;
+    }
+
+    public float GetMaxScalePoints()
+    {
+        return maxScalePoints;
     }
 }
