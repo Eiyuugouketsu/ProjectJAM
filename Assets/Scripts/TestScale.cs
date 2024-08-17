@@ -7,6 +7,8 @@ public class TestScale : MonoBehaviour
     [SerializeField] float scaleSpeed;
     [SerializeField] float minimumScale;
     [SerializeField] Rigidbody rb;
+    float baseMass;
+    float baseScale;
     float scaleValue = 0;
     List<Transform> touchingObjects = new List<Transform>();
 
@@ -19,30 +21,19 @@ public class TestScale : MonoBehaviour
     {
         touchingObjects.Remove(other.transform);
     }
-
-    void Update()
+    private void Start() 
     {
-        //if(Input.GetKey(KeyCode.Q) && touchingObjects.Count <=2)
-        //{
-        //    scaleValue += scaleSpeed * Time.deltaTime;
-        //}
-        //else if(Input.GetKey(KeyCode.E))
-        //{
-        //    scaleValue -= scaleSpeed * Time.deltaTime;
-        //}
-        //else
-        //{
-        //    scaleValue = 0;
-        //}
+        baseMass = rb.mass;
+        baseScale = transform.localScale.x;
     }
 
     public void Grow()
     {
         if (touchingObjects.Count <= 2) {
-            scaleValue += scaleSpeed * Time.deltaTime; 
+            scaleValue += scaleSpeed * Time.deltaTime;
         }
     }
-         
+    
     public void Shrink()
     {
         scaleValue -= scaleSpeed * Time.deltaTime;  
@@ -56,6 +47,7 @@ public class TestScale : MonoBehaviour
     {
         if(transform.localScale.x + scaleValue < minimumScale) return;
         transform.localScale = new Vector3(transform.localScale.x + scaleValue,transform.localScale.x + scaleValue,transform.localScale.x + scaleValue);
+        rb.mass = Mathf.Pow(transform.localScale.x/baseScale,3)*baseMass;
     }
 
     public float GetMass()
