@@ -22,18 +22,35 @@ public class TestScale : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.Q) && touchingObjects.Count <=2)
-        {
-            scaleValue += scaleSpeed * Time.deltaTime;
+        //if(Input.GetKey(KeyCode.Q) && touchingObjects.Count <=2)
+        //{
+        //    scaleValue += scaleSpeed * Time.deltaTime;
+        //}
+        //else if(Input.GetKey(KeyCode.E))
+        //{
+        //    scaleValue -= scaleSpeed * Time.deltaTime;
+        //}
+        //else
+        //{
+        //    scaleValue = 0;
+        //}
+    }
+
+    public void Grow()
+    {
+        if (touchingObjects.Count <= 2) {
+            scaleValue += scaleSpeed * Time.deltaTime; 
         }
-        else if(Input.GetKey(KeyCode.E))
-        {
-            scaleValue -= scaleSpeed * Time.deltaTime;
-        }
-        else
-        {
-            scaleValue = 0;
-        }
+    }
+         
+    public void Shrink()
+    {
+        scaleValue -= scaleSpeed * Time.deltaTime;  
+    }
+
+     public void Stop()
+    {
+        scaleValue = 0;
     }
     private void FixedUpdate() 
     {
