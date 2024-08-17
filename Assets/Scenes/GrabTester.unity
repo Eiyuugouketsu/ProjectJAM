@@ -887,9 +887,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRaycast: {fileID: 7763635280582303655}
-  playerMode: {fileID: 0}
-  playerGrabAbility: {fileID: 0}
-  playerScalePower: {fileID: 0}
+  playerMode: {fileID: 7763635280582303657}
+  playerGrabAbility: {fileID: 7763635280582303656}
+  playerScalePower: {fileID: 7763635280582303654}
   reticleImage: {fileID: 2063707349}
   defaultSprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   wSprite: {fileID: 0}
@@ -1209,6 +1209,10 @@ PrefabInstance:
       propertyPath: holdPos
       value: 
       objectReference: {fileID: 462552670}
+    - target: {fileID: 8479670071145058830, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: checkForGrabObjectDistance
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1278,6 +1282,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e6e1e11b5cf507f48aea284f740b0b2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7763635280582303656 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1623753086302791451, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+  m_PrefabInstance: {fileID: 7763635280582303653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b7bb378829a6f749b100b5d984a6542, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7763635280582303657 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8361576628246291967, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+  m_PrefabInstance: {fileID: 7763635280582303653}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ae8f456ff9973c478b6eb054e4e4f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807

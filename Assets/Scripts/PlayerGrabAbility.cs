@@ -43,7 +43,7 @@ public class PlayerGrabAbility : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E)) 
+        if (Input.GetMouseButtonDown(1)) 
         {
             if (isHoldingObject)
             {
@@ -51,6 +51,14 @@ public class PlayerGrabAbility : MonoBehaviour
             }
             else if (currObject != null && currObject.GetMass() <= maxMass) { 
                 GrabObject();
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (isHoldingObject)
+            {
+                ThrowObject();
             }
         }
     }
@@ -85,6 +93,22 @@ public class PlayerGrabAbility : MonoBehaviour
         currObject.transform.SetParent(null);
        OnObjectDropped?.Invoke();
     }
+
+    private void ThrowObject()
+    {
+            isHoldingObject = false;
+
+            Rigidbody objRb = currObject.GetComponent<Rigidbody>();
+
+            if (objRb != null)
+            {
+                objRb.isKinematic = false;
+                objRb.AddForce(holdPos.forward * throwForce, ForceMode.Impulse);
+        }
+
+            currObject.transform.SetParent(null);
+            OnObjectDropped?.Invoke();
+       }
 
     public TestScale GetCurrentObject()
     {
