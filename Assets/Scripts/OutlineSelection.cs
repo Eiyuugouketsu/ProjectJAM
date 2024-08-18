@@ -68,7 +68,7 @@ public class OutlineSelection : MonoBehaviour
             playerScalePower.OnUpdateScalePoints -= AdjustScaleColor;
         }
 
-        // currentTarget = null;
+        currentTarget = null;
     } 
 
     void SetOutline(Component scalableObject)

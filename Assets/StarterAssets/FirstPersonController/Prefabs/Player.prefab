@@ -188,7 +188,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 16e41712df5e9db46bbbdc0bf893d60a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraRoot: {fileID: 4135013735270702856}
-  checkForObjectDistance: 500
+  checkForObjectDistance: 35
   layerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -580,6 +580,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingScalePoints: 50
   maxScalePoints: 100
+  scaleFactor: 100
 --- !u!114 &8361576628246291967
 MonoBehaviour:
   m_ObjectHideFlags: 0
