@@ -223,7 +223,7 @@
                     "id": "d1d171b6-19d8-47a6-ba3a-71b6a8e7b3c0",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
-                    "processors": "InvertVector2(invertX=false),StickDeadzone,ScaleVector2(x=300,y=300)",
+                    "processors": "InvertVector2(invertX=false),StickDeadzone,ScaleVector2(x=150,y=150)",
                     "groups": "Gamepad",
                     "action": "Look",
                     "isComposite": false,
@@ -265,7 +265,7 @@
                 {
                     "name": "",
                     "id": "c8fcd86e-dcfd-4f88-8e93-b638cdbf3320",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/leftStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -275,8 +275,30 @@
                 },
                 {
                     "name": "",
+                    "id": "2bd22144-7e02-4296-84a5-b9ead8dde7a8",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "879378a3-4b2d-416f-82e0-2166e06250b7",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Pick Up Drop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d515fabc-03d3-4b6d-8a27-1bbbe6cffa87",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -287,7 +309,7 @@
                 {
                     "name": "",
                     "id": "2e8ceb65-f64d-46d9-ae48-29743f144c8b",
-                    "path": "<Gamepad>/leftTrigger",
+                    "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -308,6 +330,17 @@
                 },
                 {
                     "name": "",
+                    "id": "b8bd343f-0c18-4770-8ef8-f27d930332b7",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "02e4cd6d-9c30-444d-88bd-e20bdda531d8",
                     "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
@@ -319,8 +352,19 @@
                 },
                 {
                     "name": "",
+                    "id": "3f085fdb-b9f7-47c1-8e1f-0beec6b7dc36",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Throw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "9c66c5c8-845b-499d-9ab4-bc992a78b15c",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -342,7 +386,7 @@
                 {
                     "name": "",
                     "id": "a6a62693-8192-4109-8c6f-19703bf27caf",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
@@ -375,7 +419,7 @@
                 {
                     "name": "",
                     "id": "9f3ec04d-6ce2-4cd7-a752-0ac79d24a09e",
-                    "path": "<Gamepad>/buttonWest",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
@@ -387,7 +431,7 @@
                     "name": "",
                     "id": "404f1bfe-c31e-4838-8b81-45da8c6876bd",
                     "path": "<Keyboard>/r",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Reset Level",
@@ -395,15 +439,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "8e80ccb0-cac3-49f9-ad96-17964939ca85",
-                    "path": "<Gamepad>/buttonEast",
+                    "name": "L Shoulder/R Shoulder",
+                    "id": "d43cb814-b835-4290-a0f5-c59cbd957b40",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Reset Level",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "f6ef8203-5d2a-4090-9895-a4227fe35230",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Reset Level",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "71924631-29bb-4c96-8f71-2024f464e15e",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Reset Level",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
