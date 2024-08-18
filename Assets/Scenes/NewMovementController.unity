@@ -1319,7 +1319,7 @@ MonoBehaviour:
   playerHeight: 2
   ground:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 1024
   orientation: {fileID: 902468764}
 --- !u!1 &1258064116
 GameObject:
