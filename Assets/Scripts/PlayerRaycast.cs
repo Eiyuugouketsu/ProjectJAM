@@ -23,6 +23,10 @@ public class PlayerRaycast : MonoBehaviour
         Physics.Raycast(cameraRoot.transform.position, cameraRoot.forward, out hit, checkForObjectDistance, layerMask);
         if (!hit.collider || !hit.collider.gameObject)
         {
+            if (currentTarget != null)
+            {
+                currentTarget.GetComponent<OutlineManager>().ToggleOutlineActive(false);
+            }
             OnMouseOverScalableObject(null);
             currentTarget = null;
             return;
@@ -32,7 +36,12 @@ public class PlayerRaycast : MonoBehaviour
         if (currentTarget != hitObject || forceUpdate)
         {
             OnMouseOverScalableObject?.Invoke(hitObject);
+            if (currentTarget != null)
+            {
+                currentTarget.GetComponent<OutlineManager>().ToggleOutlineActive(false);
+            }
             currentTarget = hitObject;
+            currentTarget.GetComponent<OutlineManager>().ToggleOutlineActive(true);
         }
     }
 }

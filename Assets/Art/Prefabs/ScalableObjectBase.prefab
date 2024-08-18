@@ -10,10 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 3996637020955974732}
   - component: {fileID: -1612102377801036770}
+  - component: {fileID: 780397552629113239}
   - component: {fileID: 1078661588185390092}
   - component: {fileID: 3808843214616024259}
   - component: {fileID: 3329650288878800005}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ScalableObjectBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,8 +51,9 @@ MonoBehaviour:
   scaleSpeed: 0.5
   minimumScale: 0.5
   rb: {fileID: 0}
+  outlineManager: {fileID: 780397552629113239}
   touchingObjects: []
---- !u!114 &1078661588185390092
+--- !u!114 &780397552629113239
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -59,6 +61,21 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6563348530676061067}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d5b9f66f9c6824e89e3d0c0b0da6a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 1078661588185390092}
+  growColor: {r: 0.8862745, g: 0.12156863, b: 0.14509805, a: 1}
+  shrinkColor: {r: 0.3137255, g: 0.654902, b: 0.77254903, a: 1}
+--- !u!114 &1078661588185390092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6563348530676061067}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 

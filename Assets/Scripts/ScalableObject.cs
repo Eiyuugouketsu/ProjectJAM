@@ -8,6 +8,7 @@ public class ScalableObject : MonoBehaviour
     [SerializeField] float scaleSpeed;
     [SerializeField] float minimumScale;
     [SerializeField] Rigidbody rb;
+    [SerializeField] OutlineManager outlineManager;
     float baseMass;
     float baseScale;
     public List<GameObject> touchingObjects = new List<GameObject>();
@@ -61,6 +62,13 @@ public class ScalableObject : MonoBehaviour
             transform.localScale = new Vector3(destinationScale, destinationScale, destinationScale);
             rb.mass = Mathf.Pow(transform.localScale.x/baseScale,3) * baseMass;
         }
+    }
+
+    private void LateUpdate()
+    {
+        if (transform.localScale.x == destinationScale) outlineManager.ChangeOutlineColor(ScaleState.None);
+        else if (transform.localScale.x > destinationScale) outlineManager.ChangeOutlineColor(ScaleState.Shrinking);
+        else if (transform.localScale.x < destinationScale) outlineManager.ChangeOutlineColor(ScaleState.Growing);
     }
 
     public void SetIsKinematic(bool value)

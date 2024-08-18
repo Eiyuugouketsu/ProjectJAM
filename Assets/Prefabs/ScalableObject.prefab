@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6376163837025446047}
   - component: {fileID: 2774936653325385411}
   - component: {fileID: 3031985171949162686}
+  - component: {fileID: 596975398322128481}
   - component: {fileID: 7763598358443773012}
   m_Layer: 6
   m_Name: ScalableObject
@@ -102,6 +103,8 @@ MonoBehaviour:
   scaleSpeed: 0.5
   minimumScale: 1
   rb: {fileID: 3031985171949162686}
+  outlineManager: {fileID: 596975398322128481}
+  touchingObjects: []
 --- !u!65 &2774936653325385411
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -150,7 +153,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7763598358443773012
+--- !u!114 &596975398322128481
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,6 +161,21 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2465219313144110728}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19d5b9f66f9c6824e89e3d0c0b0da6a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outline: {fileID: 7763598358443773012}
+  growColor: {r: 0.8862745, g: 0.12156863, b: 0.14509805, a: 1}
+  shrinkColor: {r: 0.3137255, g: 0.654902, b: 0.77254903, a: 1}
+--- !u!114 &7763598358443773012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2465219313144110728}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
