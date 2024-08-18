@@ -61,18 +61,18 @@
                 },
                 {
                     "name": "Grow Object",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "c953acd3-4cb8-45a7-babf-b4d6dc90f856",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
                     "name": "Shrink Object",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "eda7aa1a-3818-4356-8431-7f94d864de20",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false

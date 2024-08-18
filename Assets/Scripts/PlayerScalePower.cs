@@ -2,16 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
+public enum ScaleState {
+    None,
+    Growing,
+    Shrinking,
+}
 
 public class PlayerScalePower : MonoBehaviour
 {
     public event Action<float> OnUpdateScalePoints;
+    [SerializeField] PlayerMode playerMode;
     [SerializeField] float startingScalePoints = 50f;
     [SerializeField] float maxScalePoints = 100f;
-    [SerializeField] float scaleFactor = 100f;
+
+    [Tooltip("How many scale points are used with one second of growing/shrinking an object")]
+    [SerializeField] float scalePointsPerSecond = 10f;
+
+    [Tooltip("How many units is the object's scale modified by when 1 scale point is spent on it")]
+    [SerializeField] float unitsScaledPerScalePoint = 0.1f;
+
     float currentScalePoints;
-    TestScale currObject;
+    ScalableObject currObject;
     private PlayerRaycast playerRaycast;
+
+    ScaleState state = ScaleState.None;
 
     private void Awake()
     {
@@ -30,7 +46,38 @@ public class PlayerScalePower : MonoBehaviour
         OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
     }
 
-    private void HandleMouseOverScalableObject(TestScale scalableObject)
+    private void Update()
+    {
+        if (playerMode.GetPlayerState() == PlayerState.Grab)
+        {
+            state = ScaleState.None;
+            return;
+        }
+        if (currObject == null || state == ScaleState.None) return;
+        if (state == ScaleState.Growing)
+        {
+            if (currentScalePoints >= maxScalePoints || !currObject.CheckIfCanGrow()) return;
+            float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime, maxScalePoints - currentScalePoints);
+            currObject.Grow(pointsSpent * unitsScaledPerScalePoint);
+            // Debug.Log($"pointsSpend: {pointsSpent}, deltaTime: {Time.deltaTime}, max: {maxScalePoints - currentScalePoints}, growthAmount: {pointsSpent * unitsScaledPerScalePoint}");
+            currentScalePoints += pointsSpent;
+            currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
+            OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
+        } else if (state == ScaleState.Shrinking)
+        {
+            if (currentScalePoints <= 0f) return;
+            // This is the most points that can be spent on this object before it would reduce it below it's minimum scale
+            float mostPointsSpendable = (currObject.GetCurrentScale() - currObject.GetMinimumScale()) / unitsScaledPerScalePoint;
+            float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime, currentScalePoints, mostPointsSpendable);
+            currObject.Shrink(pointsSpent * unitsScaledPerScalePoint);
+            // Debug.Log($"pointsSpend: {pointsSpent}, shrinkAmount: {pointsSpent * unitsScaledPerScalePoint}");
+            currentScalePoints -= pointsSpent;
+            currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
+            OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
+        }
+    }
+
+    private void HandleMouseOverScalableObject(ScalableObject scalableObject)
     {
 
         if (scalableObject != null)
@@ -45,29 +92,16 @@ public class PlayerScalePower : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    public void OnGrowObject(InputValue value)
     {
-        
+        if (playerMode.GetPlayerState() == PlayerState.Grab || state == ScaleState.Shrinking) return;
+        state = value.isPressed ? ScaleState.Growing : ScaleState.None;
     }
 
-    public void OnGrowObject()
+    public void OnShrinkObject(InputValue value)
     {
-        if (currObject == null || currentScalePoints >= maxScalePoints) return;
-        float growAmount = Mathf.Min(Time.deltaTime * scaleFactor, maxScalePoints - currentScalePoints);
-        currObject.Grow(growAmount / scaleFactor);
-        currentScalePoints += growAmount;
-        currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
-        OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
-    }
-
-    public void OnShrinkObject()
-    {
-        if (currObject == null || currentScalePoints <= 0f) return;
-        float shrinkAmount = Mathf.Min(Time.deltaTime * scaleFactor, currentScalePoints);
-        currObject.Shrink(shrinkAmount / scaleFactor);
-        currentScalePoints -= shrinkAmount;
-        currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
-        OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
+        if (playerMode.GetPlayerState() == PlayerState.Grab || state == ScaleState.Growing) return;
+        state = value.isPressed ? ScaleState.Shrinking : ScaleState.None;
     }
 
     public float GetCurrentScalePoints()

@@ -6,12 +6,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerGrabAbility : MonoBehaviour
 {
-    public event Action<TestScale> OnObjectPickedUp;
+    public event Action<ScalableObject> OnObjectPickedUp;
     public event Action OnObjectDropped;
 
     private PlayerMode playerMode;
     private PlayerRaycast playerRaycast;
-    TestScale currObject;
+    ScalableObject currObject;
     public bool isHoldingObject = false;
     [SerializeField] private Transform holdPos;
 
@@ -27,7 +27,7 @@ public class PlayerGrabAbility : MonoBehaviour
         }
     }
 
-    private void HandleMouseOverScalableObject(TestScale scalableObject)
+    private void HandleMouseOverScalableObject(ScalableObject scalableObject)
     {
 
         if (scalableObject != null)
@@ -44,7 +44,6 @@ public class PlayerGrabAbility : MonoBehaviour
 
     public void OnPickUpDrop()
     {
-        Debug.Log("pickup");
         if (playerMode.GetPlayerState() == PlayerState.Scale) return;
         if (isHoldingObject)
         {
@@ -67,12 +66,7 @@ public class PlayerGrabAbility : MonoBehaviour
     {
         isHoldingObject = true;
 
-        Rigidbody objRb = currObject.GetComponent<Rigidbody>();
-
-        if (objRb != null) 
-        {
-            objRb.isKinematic = true;
-        }
+        currObject.SetIsKinematic(true);
 
         currObject.transform.position = holdPos.position;
         currObject.transform.SetParent(holdPos);
@@ -83,12 +77,7 @@ public class PlayerGrabAbility : MonoBehaviour
     {
         isHoldingObject = false;
 
-        Rigidbody objRb = currObject.GetComponent<Rigidbody>();
-
-        if (objRb != null)
-        {
-            objRb.isKinematic = false;
-        }
+        currObject.SetIsKinematic(false);
 
         currObject.transform.SetParent(null);
         OnObjectDropped?.Invoke();
@@ -98,19 +87,14 @@ public class PlayerGrabAbility : MonoBehaviour
     {
         isHoldingObject = false;
 
-        Rigidbody objRb = currObject.GetComponent<Rigidbody>();
-
-        if (objRb != null)
-        {
-            objRb.isKinematic = false;
-            objRb.AddForce(holdPos.forward * PlayerThresholds.Instance.getThrowForce(), ForceMode.Impulse);
-        }
+        currObject.SetIsKinematic(true);
+        currObject.ApplyForce(holdPos.forward);
 
         currObject.transform.SetParent(null);
         OnObjectDropped?.Invoke();
     }
 
-    public TestScale GetCurrentObject()
+    public ScalableObject GetCurrentObject()
     {
         return currObject;
     }

@@ -98,7 +98,7 @@ public class OutlineSelection : MonoBehaviour
         currentTarget.OutlineColor = selectionColor;
     }
 
-    public void HandleOutline(TestScale scalableObject)
+    public void HandleOutline(ScalableObject scalableObject)
     {
         SetOutline(scalableObject);
         EnableOutlineOrAddIfAbsent(scalableObject);
