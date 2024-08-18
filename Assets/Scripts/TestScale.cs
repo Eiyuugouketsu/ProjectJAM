@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TestScale : MonoBehaviour
@@ -10,16 +11,19 @@ public class TestScale : MonoBehaviour
     float baseMass;
     float baseScale;
     float scaleValue = 0;
-    List<Transform> touchingObjects = new List<Transform>();
+    public List<GameObject> touchingObjects = new List<GameObject>();
+    public List<TestScale> scalableObjects => touchingObjects.Where(obj => obj.layer == LayerMask.NameToLayer("ScalableObject")).Select(obj => obj.GetComponent<TestScale>()).ToList();
+    bool touchingCeiling => touchingObjects.Any(obj => obj.gameObject.layer == LayerMask.NameToLayer("Ceiling"));
+    float touchingWalls => touchingObjects.Count(obj => obj.gameObject.layer == LayerMask.NameToLayer("Wall"));
 
     private void OnCollisionEnter(Collision other) 
     {
-        touchingObjects.Add(other.transform);
+        touchingObjects.Add(other.gameObject);
     }
 
     private void OnCollisionExit(Collision other) 
     {
-        touchingObjects.Remove(other.transform);
+        touchingObjects.Remove(other.transform.gameObject);
     }
     private void Start() 
     {
@@ -29,11 +33,24 @@ public class TestScale : MonoBehaviour
 
     public void Grow(float growAmount)
     {
-        if (touchingObjects.Count <= 2) {
-            scaleValue += growAmount * scaleSpeed; 
+        if(CheckIfCanGrow())
+        {
+            scaleValue += growAmount * scaleSpeed;
         }
+        else
+        {
+            Stop();
+        }
+        
     }
-         
+    public bool CheckIfCanGrow()
+    {
+        return (!(touchingWalls >1) && !touchingCeiling) && (!scalableObjects.Any(obj => obj.touchingWalls > 0 || obj.touchingCeiling)  || scalableObjects.Count == 0) && !PlayerThresholds.Instance.isCeilingAbove;
+    }
+    public bool CheckIfCanShrink()
+    {
+        return transform.localScale.x + scaleValue < minimumScale;
+    }
     public void Shrink(float shrinkAmount)
     {
         scaleValue -= shrinkAmount * scaleSpeed;

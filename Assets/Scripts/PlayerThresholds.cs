@@ -21,9 +21,9 @@ public class PlayerThresholds : MonoBehaviour
 
     //Common Variables
     [SerializeField] private static float maxCarryMass = 100f; 
-    [SerializeField] private static float throwForce = 250f;
+    [SerializeField] private static float throwForce = 5f;
     [SerializeField] private static float holdDistance = 2f;
-
+    public bool isCeilingAbove;
     public float getMaxCarryMass ()
     {
         return maxCarryMass;
