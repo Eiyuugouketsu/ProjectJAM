@@ -25,13 +25,14 @@ public class PlayerThresholds : MonoBehaviour
     [SerializeField] private static float maxThrowMass = 25f;
     [SerializeField] private static float throwForce = 250f;
     [SerializeField] private static float holdDistance = 2f;
+    public bool isCeilingAbove;
 
     public float GetMaxPushMass()
     {
         return maxPushMass;
     }
 
-    public float getMaxCarryMass ()
+    public float getMaxCarryMass()
     {
         return maxCarryMass;
     }
@@ -41,7 +42,7 @@ public class PlayerThresholds : MonoBehaviour
         return maxThrowMass;
     }
 
-    public float getThrowForce ()
+    public float getThrowForce()
     {
         return throwForce;
     }
