@@ -19,8 +19,8 @@ TagManager:
   - Wall
   - Ceiling
   - Ground
-  - 
-  - 
+  - PlayerForceField
+  - CurrentlyGrowingScalableObject
   - 
   - 
   - 

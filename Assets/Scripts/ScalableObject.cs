@@ -9,14 +9,18 @@ public class ScalableObject : MonoBehaviour
     [SerializeField] float minimumScale;
     [SerializeField] Rigidbody rb;
     [SerializeField] OutlineManager outlineManager;
+    [SerializeField] LayerMask standardLayerMask;
+    [SerializeField] LayerMask currentlyGrowingLayerMask;
     float baseMass;
     float baseScale;
     public List<GameObject> touchingObjects = new List<GameObject>();
     public List<ScalableObject> scalableObjects => touchingObjects.Where(obj => obj.layer == LayerMask.NameToLayer("ScalableObject")).Select(obj => obj.GetComponent<ScalableObject>()).ToList();
     bool touchingCeiling => touchingObjects.Any(obj => obj.gameObject.layer == LayerMask.NameToLayer("Ceiling"));
+    bool touchingPlayerForceField => touchingObjects.Any(obj => obj.gameObject.layer == LayerMask.NameToLayer("PlayerForceField"));
     float touchingWalls => touchingObjects.Count(obj => obj.gameObject.layer == LayerMask.NameToLayer("Wall"));
 
     float destinationScale;
+    Vector3 playerPosition;
 
     private void Awake()
     {
@@ -37,7 +41,7 @@ public class ScalableObject : MonoBehaviour
 
     public bool CheckIfCanGrow()
     {
-        return (!(touchingWalls >1) && !touchingCeiling) && (!scalableObjects.Any(obj => obj.touchingWalls > 0 || obj.touchingCeiling)  || scalableObjects.Count == 0) && !PlayerThresholds.Instance.isCeilingAbove;
+        return (!(touchingWalls >1) && !touchingCeiling && !touchingPlayerForceField) && (!scalableObjects.Any(obj => obj.touchingWalls > 0 || obj.touchingCeiling)  || scalableObjects.Count == 0) && !PlayerThresholds.Instance.isCeilingAbove;
     }
 
     public bool CheckIfCanShrink()
@@ -45,21 +49,27 @@ public class ScalableObject : MonoBehaviour
         return transform.localScale.x > minimumScale;
     }
 
-    public void Grow(float growAmount)
+    public void Grow(float growAmount, Vector3 playerPosition)
     {
+        this.playerPosition = playerPosition;
         if (CheckIfCanGrow()) destinationScale = destinationScale + growAmount;
     }
 
-    public void Shrink(float shrinkAmount)
+    public void Shrink(float shrinkAmount, Vector3 playerPosition)
     {
+        this.playerPosition = playerPosition;
         if (CheckIfCanShrink()) destinationScale = Mathf.Max(minimumScale, destinationScale - shrinkAmount);
     }
 
     private void FixedUpdate() 
     {
+        gameObject.layer = transform.localScale.x < destinationScale ? LayerMask.NameToLayer("CurrentlyGrowingScalableObject") : LayerMask.NameToLayer("ScalableObject");
         if (transform.localScale.x != destinationScale)
         {
+            float scaleDiff = transform.localScale.x - destinationScale;
             transform.localScale = new Vector3(destinationScale, destinationScale, destinationScale);
+            Vector3 pushAway = (playerPosition - transform.position).normalized * (scaleDiff / 2f);
+            rb.velocity = new Vector3(pushAway.x, rb.velocity.y, pushAway.z);
             rb.mass = Mathf.Pow(transform.localScale.x/baseScale,3) * baseMass;
         }
     }
