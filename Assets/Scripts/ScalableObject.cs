@@ -5,12 +5,9 @@ using UnityEngine;
 
 public class ScalableObject : MonoBehaviour
 {
-    [SerializeField] float scaleSpeed;
     [SerializeField] float minimumScale;
-    [SerializeField] Rigidbody rb;
+    [SerializeField] protected Rigidbody rb;
     [SerializeField] OutlineManager outlineManager;
-    [SerializeField] LayerMask standardLayerMask;
-    [SerializeField] LayerMask currentlyGrowingLayerMask;
     float baseMass;
     float baseScale;
     public List<GameObject> touchingObjects = new List<GameObject>();
@@ -21,6 +18,8 @@ public class ScalableObject : MonoBehaviour
 
     float destinationScale;
     Vector3 playerPosition;
+
+    bool interactable = true;
 
     private void Awake()
     {
@@ -41,11 +40,13 @@ public class ScalableObject : MonoBehaviour
 
     public bool CheckIfCanGrow()
     {
+        if (!interactable) return false;
         return (!(touchingWalls >1) && !touchingCeiling && !touchingPlayerForceField) && (!scalableObjects.Any(obj => obj.touchingWalls > 0 || obj.touchingCeiling)  || scalableObjects.Count == 0) && !PlayerThresholds.Instance.isCeilingAbove;
     }
 
     public bool CheckIfCanShrink()
     {
+        if (!interactable) return false;
         return transform.localScale.x > minimumScale;
     }
 
@@ -109,5 +110,15 @@ public class ScalableObject : MonoBehaviour
     public float GetCurrentScale()
     {
         return transform.localScale.x;
+    }
+    
+    public bool GetIsInteractable()
+    {
+        return interactable;
+    }
+
+    public void SetIsInteractable(bool value)
+    {
+        interactable = value;
     }
 }

@@ -27,6 +27,14 @@ public class PlayerGrabAbility : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (isHoldingObject && currObject != null && !currObject.GetIsInteractable())
+        {
+            DropObject();
+        }
+    }
+
     private void HandleMouseOverScalableObject(ScalableObject scalableObject)
     {
 
@@ -49,14 +57,14 @@ public class PlayerGrabAbility : MonoBehaviour
         {
             DropObject();
         }
-        else if (currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.getMaxCarryMass()) { 
+        else if (currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.getMaxCarryMass() && currObject.GetIsInteractable()) { 
             GrabObject();
         }
     }
 
     public void OnThrow()
     {
-        if (isHoldingObject && currObject.GetMass() <= PlayerThresholds.Instance.GetMaxThrowMass())
+        if (isHoldingObject && currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.GetMaxThrowMass())
         {
             ThrowObject();
         }
