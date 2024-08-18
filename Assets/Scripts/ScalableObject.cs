@@ -87,6 +87,11 @@ public class ScalableObject : MonoBehaviour
         rb.isKinematic = value;
     }
 
+    public bool GetIsKinematic()
+    {
+        return rb.isKinematic;
+    }
+
     public void ApplyForce(Vector3 holdPosForward)
     {
         rb.AddForce(holdPosForward * PlayerThresholds.Instance.getThrowForce(), ForceMode.Impulse);
