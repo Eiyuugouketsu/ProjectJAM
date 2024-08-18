@@ -45,37 +45,27 @@ public class PlayerScalePower : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if (currObject != null) { 
-            GrowShrink();
-        }
-    }
-
     private void FixedUpdate()
     {
         
     }
 
-    private void GrowShrink()
+    public void OnGrowObject()
     {
-        if (Input.GetMouseButton(0) && currentScalePoints < maxScalePoints)
-        {
-            float growAmount = Mathf.Min(Time.deltaTime * scaleFactor, maxScalePoints - currentScalePoints);
-            currObject.Grow(growAmount / scaleFactor);
-            currentScalePoints += growAmount;
-        }
-        else if (Input.GetMouseButton(1) && currentScalePoints > 0f)
-        {
-            float shrinkAmount = Mathf.Min(Time.deltaTime * scaleFactor, currentScalePoints);
-            currObject.Shrink(shrinkAmount / scaleFactor);
-            currentScalePoints -= shrinkAmount;
-        } 
-        else
-        {
-            currObject.Stop();
-        }
-        
+        if (currObject == null || currentScalePoints >= maxScalePoints) return;
+        float growAmount = Mathf.Min(Time.deltaTime * scaleFactor, maxScalePoints - currentScalePoints);
+        currObject.Grow(growAmount / scaleFactor);
+        currentScalePoints += growAmount;
+        currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
+        OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
+    }
+
+    public void OnShrinkObject()
+    {
+        if (currObject == null || currentScalePoints <= 0f) return;
+        float shrinkAmount = Mathf.Min(Time.deltaTime * scaleFactor, currentScalePoints);
+        currObject.Shrink(shrinkAmount / scaleFactor);
+        currentScalePoints -= shrinkAmount;
         currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
         OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
     }
