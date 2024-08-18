@@ -2,19 +2,23 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerGrabAbility : MonoBehaviour
 {
-    public event Action<TestScale> OnObjectPickedUp;
+    public event Action<ScalableObject> OnObjectPickedUp;
     public event Action OnObjectDropped;
-    TestScale currObject;
+
+    private PlayerMode playerMode;
     private PlayerRaycast playerRaycast;
+    ScalableObject currObject;
     public bool isHoldingObject = false;
     [SerializeField] private Transform holdPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerMode = GetComponent<PlayerMode>();
         playerRaycast = GetComponent<PlayerRaycast>();
 
         if (playerRaycast != null)
@@ -23,7 +27,7 @@ public class PlayerGrabAbility : MonoBehaviour
         }
     }
 
-    private void HandleMouseOverScalableObject(TestScale scalableObject)
+    private void HandleMouseOverScalableObject(ScalableObject scalableObject)
     {
 
         if (scalableObject != null)
@@ -38,26 +42,23 @@ public class PlayerGrabAbility : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnPickUpDrop()
     {
-        if (Input.GetMouseButtonDown(1)) 
+        if (playerMode.GetPlayerState() == PlayerState.Scale) return;
+        if (isHoldingObject)
         {
-            if (isHoldingObject)
-            {
-                DropObject();
-            }
-            else if (currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.getMaxCarryMass()) { 
-                GrabObject();
-            }
+            DropObject();
         }
+        else if (currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.getMaxCarryMass()) { 
+            GrabObject();
+        }
+    }
 
-        if (Input.GetMouseButtonDown(0))
+    public void OnThrow()
+    {
+        if (isHoldingObject && currObject.GetMass() <= PlayerThresholds.Instance.GetMaxThrowMass())
         {
-            if (isHoldingObject)
-            {
-                ThrowObject();
-            }
+            ThrowObject();
         }
     }
 
@@ -65,12 +66,7 @@ public class PlayerGrabAbility : MonoBehaviour
     {
         isHoldingObject = true;
 
-        Rigidbody objRb = currObject.GetComponent<Rigidbody>();
-
-        if (objRb != null) 
-        {
-            objRb.isKinematic = true;
-        }
+        currObject.SetIsKinematic(true);
 
         currObject.transform.position = holdPos.position;
         currObject.transform.SetParent(holdPos);
@@ -81,34 +77,24 @@ public class PlayerGrabAbility : MonoBehaviour
     {
         isHoldingObject = false;
 
-        Rigidbody objRb = currObject.GetComponent<Rigidbody>();
-
-        if (objRb != null)
-        {
-            objRb.isKinematic = false;
-        }
+        currObject.SetIsKinematic(false);
 
         currObject.transform.SetParent(null);
-       OnObjectDropped?.Invoke();
+        OnObjectDropped?.Invoke();
     }
 
     private void ThrowObject()
     {
-            isHoldingObject = false;
+        isHoldingObject = false;
 
-            Rigidbody objRb = currObject.GetComponent<Rigidbody>();
+        currObject.SetIsKinematic(true);
+        currObject.ApplyForce(holdPos.forward);
 
-            if (objRb != null)
-            {
-                objRb.isKinematic = false;
-                objRb.AddForce(holdPos.forward * PlayerThresholds.Instance.getThrowForce(), ForceMode.Impulse);
-        }
+        currObject.transform.SetParent(null);
+        OnObjectDropped?.Invoke();
+    }
 
-            currObject.transform.SetParent(null);
-            OnObjectDropped?.Invoke();
-       }
-
-    public TestScale GetCurrentObject()
+    public ScalableObject GetCurrentObject()
     {
         return currObject;
     }
