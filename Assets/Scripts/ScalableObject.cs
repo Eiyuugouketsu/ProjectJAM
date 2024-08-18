@@ -17,6 +17,7 @@ public class ScalableObject : MonoBehaviour
     float touchingWalls => touchingObjects.Count(obj => obj.gameObject.layer == LayerMask.NameToLayer("Wall"));
 
     float destinationScale;
+    Vector3 playerPosition;
 
     private void Awake()
     {
@@ -45,21 +46,26 @@ public class ScalableObject : MonoBehaviour
         return transform.localScale.x > minimumScale;
     }
 
-    public void Grow(float growAmount)
+    public void Grow(float growAmount, Vector3 playerPosition)
     {
         if (CheckIfCanGrow()) destinationScale = destinationScale + growAmount;
+        this.playerPosition = playerPosition;
     }
 
-    public void Shrink(float shrinkAmount)
+    public void Shrink(float shrinkAmount, Vector3 playerPosition)
     {
         if (CheckIfCanShrink()) destinationScale = Mathf.Max(minimumScale, destinationScale - shrinkAmount);
+        this.playerPosition = playerPosition;
     }
 
     private void FixedUpdate() 
     {
         if (transform.localScale.x != destinationScale)
         {
+            float scaleDiff = transform.localScale.x - destinationScale;
             transform.localScale = new Vector3(destinationScale, destinationScale, destinationScale);
+            Vector3 pushAway = (playerPosition - transform.position).normalized * (scaleDiff / 2f);
+            rb.velocity = new Vector3(pushAway.x, rb.velocity.y, pushAway.z);
             rb.mass = Mathf.Pow(transform.localScale.x/baseScale,3) * baseMass;
         }
     }
