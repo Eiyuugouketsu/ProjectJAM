@@ -23,11 +23,18 @@ public class PlayerScalePower : MonoBehaviour
     [Tooltip("How many units is the object's scale modified by when 1 scale point is spent on it")]
     [SerializeField] float unitsScaledPerScalePoint = 0.1f;
 
+    [Tooltip("The value that this curve evaluates to is applied as a multiplier to scalePointsPerSecond")]
+    [SerializeField] AnimationCurve scaleRateCurve;
+
+    [Tooltip("This is the amount of time represented by 1 on the scaleRateCurve")]
+    [SerializeField] float scaleRateTime = 1f;
+
     float currentScalePoints;
     ScalableObject currObject;
     private PlayerRaycast playerRaycast;
 
     ScaleState state = ScaleState.None;
+    float elapsedTimeScaling = 0f;
 
     private void Awake()
     {
@@ -51,29 +58,39 @@ public class PlayerScalePower : MonoBehaviour
         if (playerMode.GetPlayerState() == PlayerState.Grab)
         {
             state = ScaleState.None;
+            elapsedTimeScaling = 0f;
             return;
         }
-        if (currObject == null || state == ScaleState.None) return;
+        if (currObject == null || state == ScaleState.None)
+        {
+            elapsedTimeScaling = 0f;
+            return;
+        }
+        
+        float curveFactor = scaleRateCurve.Evaluate(Mathf.Clamp01(elapsedTimeScaling / scaleRateTime));
+
         if (state == ScaleState.Growing)
         {
             if (currentScalePoints >= maxScalePoints || !currObject.CheckIfCanGrow()) return;
-            float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime, maxScalePoints - currentScalePoints);
+            float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime * curveFactor, maxScalePoints - currentScalePoints);
             currObject.Grow(pointsSpent * unitsScaledPerScalePoint);
             // Debug.Log($"pointsSpend: {pointsSpent}, deltaTime: {Time.deltaTime}, max: {maxScalePoints - currentScalePoints}, growthAmount: {pointsSpent * unitsScaledPerScalePoint}");
             currentScalePoints += pointsSpent;
             currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
             OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
+            elapsedTimeScaling += Time.deltaTime;
         } else if (state == ScaleState.Shrinking)
         {
             if (currentScalePoints <= 0f) return;
             // This is the most points that can be spent on this object before it would reduce it below it's minimum scale
             float mostPointsSpendable = (currObject.GetCurrentScale() - currObject.GetMinimumScale()) / unitsScaledPerScalePoint;
-            float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime, currentScalePoints, mostPointsSpendable);
+            float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime * curveFactor, currentScalePoints, mostPointsSpendable);
             currObject.Shrink(pointsSpent * unitsScaledPerScalePoint);
             // Debug.Log($"pointsSpend: {pointsSpent}, shrinkAmount: {pointsSpent * unitsScaledPerScalePoint}");
             currentScalePoints -= pointsSpent;
             currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
             OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
+            elapsedTimeScaling += Time.deltaTime;
         }
     }
 
