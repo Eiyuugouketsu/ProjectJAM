@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class PlayerRaycast : MonoBehaviour
 {
-    public event Action<TestScale> OnMouseOverScalableObject;
+    public event Action<ScalableObject> OnMouseOverScalableObject;
     [SerializeField] Transform cameraRoot;
     [SerializeField] float checkForObjectDistance;
     [SerializeField] LayerMask layerMask;
-    TestScale currentTarget;
+    ScalableObject currentTarget;
 
     private void Update()
     {
@@ -28,7 +28,7 @@ public class PlayerRaycast : MonoBehaviour
             return;
         }
         
-        TestScale hitObject = hit.collider.gameObject.GetComponent<TestScale>();
+        ScalableObject hitObject = hit.collider.gameObject.GetComponent<ScalableObject>();
         if (currentTarget != hitObject || forceUpdate)
         {
             OnMouseOverScalableObject?.Invoke(hitObject);

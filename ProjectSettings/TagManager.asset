@@ -16,8 +16,8 @@ TagManager:
   - UI
   - ScalableObject
   - NoCollide
-  - Floor
-  - 
+  - Wall
+  - Ceiling
   - 
   - 
   - 

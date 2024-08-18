@@ -36,7 +36,7 @@ public class ReticleUI : MonoBehaviour
     float bothClickTimer = 0f;
     [SerializeField] float bothClickAlternationTime = 0.5f;
 
-    TestScale currentTarget;
+    ScalableObject currentTarget;
 
     private void Start()
     {
@@ -54,7 +54,6 @@ public class ReticleUI : MonoBehaviour
         if (bothClickTimer >= bothClickAlternationTime)
         {
             reticleImage.sprite = reticleImage.sprite == leftClickSprite ? rightClickSprite : leftClickSprite;
-            Debug.Log(reticleImage.sprite);
             bothClickTimer = 0f;
         }
     }
@@ -67,7 +66,7 @@ public class ReticleUI : MonoBehaviour
 
     private void SetReticleState(ReticleState newState)
     {
-        Debug.Log($"newState: {newState}");
+        //Debug.Log($"newState: {newState}");
         if (state != ReticleState.Both && newState == ReticleState.Both) SetBothClickState();
         state = newState;
 
@@ -141,13 +140,13 @@ public class ReticleUI : MonoBehaviour
         SetReticleState(ReticleState.Default);
     }
 
-    private void Player_OnMouseOverScalableObject(TestScale scalableObject)
+    private void Player_OnMouseOverScalableObject(ScalableObject scalableObject)
     {
         currentTarget = scalableObject;
         CheckForReticleState();
     }
 
-    private void PlayerGrabAbility_OnObjectPickedUp(TestScale scalableObject)
+    private void PlayerGrabAbility_OnObjectPickedUp(ScalableObject scalableObject)
     {
         currentTarget = scalableObject;
         CheckForReticleState();

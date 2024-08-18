@@ -6,9 +6,8 @@ using UnityEngine.UI;
 public class ScalePowerUI : MonoBehaviour
 {
     [SerializeField] PlayerScalePower player;
-    [SerializeField] Image barFront;
-    [SerializeField] Color shrinkColor;
-    [SerializeField] Color growColor;
+    [SerializeField] Image barFrontGrow;
+    [SerializeField] Image barFrontShrink;
 
     void Start()
     {
@@ -17,7 +16,10 @@ public class ScalePowerUI : MonoBehaviour
 
     private void PlayerScalePower_OnUpdateScalePoints(float newValuePercent)
     {
-        barFront.fillAmount = newValuePercent;
-        barFront.color = Color.Lerp(shrinkColor, growColor, newValuePercent);
+        barFrontGrow.fillAmount = newValuePercent;
+        barFrontShrink.fillAmount = newValuePercent;
+
+        barFrontGrow.color = new Color(1f, 1f, 1f, newValuePercent);
+        barFrontShrink.color = new Color(1f, 1f, 1f, 1f);
     }
 }

@@ -25,34 +25,22 @@ public class PlayerMode : MonoBehaviour
     {
         playerScalePower = GetComponent<PlayerScalePower>();
         playerGrabAbility = GetComponent<PlayerGrabAbility>();
-        UpdateState();          
+        UpdateState();
     }
 
-    
-
-
-    // Update is called once per frame
-    void Update()
+    public void OnChangeMode()
     {
-        HandleStateSwitch();
-    }
-
-    void HandleStateSwitch()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (currentState == PlayerState.Grab)
         {
-            if (currentState == PlayerState.Grab)
-            {
-                currentState = PlayerState.Scale;
-                Debug.Log("Switched to Scale State");
-            }
-            else if (currentState == PlayerState.Scale)
-            {
-                currentState = PlayerState.Grab;
-                Debug.Log("Switched to Grab State");
-            }
-            UpdateState();
+            currentState = PlayerState.Scale;
+            Debug.Log("Switched to Scale State");
         }
+        else if (currentState == PlayerState.Scale)
+        {
+            currentState = PlayerState.Grab;
+            Debug.Log("Switched to Grab State");
+        }
+        UpdateState();
     }
 
     void UpdateState()
