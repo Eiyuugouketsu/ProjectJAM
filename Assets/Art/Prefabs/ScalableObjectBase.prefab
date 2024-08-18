@@ -50,8 +50,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleSpeed: 0.5
   minimumScale: 0.5
-  rb: {fileID: 0}
+  rb: {fileID: 3329650288878800005}
   outlineManager: {fileID: 780397552629113239}
+  standardLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
+  currentlyGrowingLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
   touchingObjects: []
 --- !u!114 &780397552629113239
 MonoBehaviour:
