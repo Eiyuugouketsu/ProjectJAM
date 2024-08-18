@@ -36,12 +36,12 @@ public class PlayerScalePower : MonoBehaviour
         if (scalableObject != null)
         {
             currObject = scalableObject;
-            Debug.Log("Mouse is over a scalable object: " + scalableObject.name);
+            //Debug.Log("Mouse is over a scalable object: " + scalableObject.name);
         }
         else
         {
             currObject = null;
-            Debug.Log("Mouse is not over any scalable object.");
+            //Debug.Log("Mouse is not over any scalable object.");
         }
     }
 
@@ -59,7 +59,7 @@ public class PlayerScalePower : MonoBehaviour
 
     private void GrowShrink()
     {
-        if (Input.GetMouseButton(0) && currentScalePoints < maxScalePoints)
+        if (Input.GetMouseButton(0) && currentScalePoints < maxScalePoints && currObject.CheckIfCanGrow())
         {
             float growAmount = Mathf.Min(Time.deltaTime * scaleFactor, maxScalePoints - currentScalePoints);
             currObject.Grow(growAmount / scaleFactor);

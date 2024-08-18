@@ -67,7 +67,7 @@ public class ReticleUI : MonoBehaviour
 
     private void SetReticleState(ReticleState newState)
     {
-        Debug.Log($"newState: {newState}");
+        //Debug.Log($"newState: {newState}");
         if (state != ReticleState.Both && newState == ReticleState.Both) SetBothClickState();
         state = newState;
 
