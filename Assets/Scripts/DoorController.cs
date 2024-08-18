@@ -41,7 +41,7 @@ public class DoorController : MonoBehaviour
         posR = doorRight.transform.position;
     }
 
-    void UpdateDoorState(DoorState currDoorState)
+    public void UpdateDoorState(DoorState currDoorState)
     {
         switch (currDoorState)
         {
