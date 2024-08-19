@@ -12,7 +12,6 @@ public class TransitionBox : MonoBehaviour
     {
         closeEnterDoorTrigger.OnEventTriggerEnter += CloseDoor;
         openExitDoorTrigger.OnEventTriggerEnter += OpenDoor;
-        exitTransitionBoxTrigger.OnEventTriggerEnter += ExitTranitionBox;
     }
 
     void CloseDoor(Collider other)
@@ -24,11 +23,6 @@ public class TransitionBox : MonoBehaviour
     void OpenDoor(Collider other)
     {
 
-    }
-
-    void ExitTranitionBox(Collider other)
-    {
-        GameManager.Instance.levelManager.TransitionBoxExited = true;
     }
 
     public void DisableAndDestroy()
