@@ -23,7 +23,7 @@ public class PlayerGrabAbility : MonoBehaviour
 
         if (playerRaycast != null)
         {
-            playerRaycast.OnMouseOverScalableObject += HandleMouseOverScalableObject;
+            playerRaycast.OnMouseOverGrabbableObject += HandleMouseOverScalableObject;
         }
     }
 
