@@ -17,9 +17,9 @@ public class ReticleUI : MonoBehaviour
 {
     ReticleState state;
     [SerializeField] PlayerRaycast playerRaycast;
-    [SerializeField] PlayerMode playerMode;
-    [SerializeField] PlayerGrabAbility playerGrabAbility;
-    [SerializeField] PlayerScalePower playerScalePower;
+    PlayerMode playerMode;
+    PlayerGrabAbility playerGrabAbility;
+    PlayerScalePower playerScalePower;
     [SerializeField] Image reticleImage;
     
     [SerializeField] Sprite defaultSprite;
@@ -38,12 +38,15 @@ public class ReticleUI : MonoBehaviour
 
     ScalableObject currentTarget;
 
-    private void Start()
+    public void SubscribeToPlayerEvents()
     {
-        playerRaycast.OnMouseOverScalableObject += Player_OnMouseOverScalableObject;
-        playerGrabAbility.OnObjectPickedUp += PlayerGrabAbility_OnObjectPickedUp;
-        playerGrabAbility.OnObjectDropped += PlayerGrabAbility_OnObjectDropped;
-        playerScalePower.OnUpdateScalePoints += PlayerScalePower_OnUpdateScalePoints;
+        PlayerThresholds.Instance.playerRaycast.OnMouseOverScalableObject += Player_OnMouseOverScalableObject;
+        PlayerThresholds.Instance.playerGrabAbility.OnObjectPickedUp += PlayerGrabAbility_OnObjectPickedUp;
+        PlayerThresholds.Instance.playerGrabAbility.OnObjectDropped += PlayerGrabAbility_OnObjectDropped;
+        PlayerThresholds.Instance.playerScalePower.OnUpdateScalePoints += PlayerScalePower_OnUpdateScalePoints;
+        playerGrabAbility = PlayerThresholds.Instance.playerGrabAbility;
+        playerScalePower = PlayerThresholds.Instance.playerScalePower;
+        playerMode = PlayerThresholds.Instance.playerMode;
         reticleImage.sprite = defaultSprite;
     }
 
