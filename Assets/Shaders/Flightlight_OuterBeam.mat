@@ -45,6 +45,7 @@ Material:
     - _IsOuterBeam: 1
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Scroll_Speed: 0.5
     m_Colors:
     - _Beam_Color: {r: 1, g: 0.91764706, b: 0.5254902, a: 0.47058824}
     - _Speed: {r: 1, g: 0, b: 0, a: 0}

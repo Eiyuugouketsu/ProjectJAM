@@ -23,6 +23,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _SampleTexture2D_9af18ecf3fdd4008b5845755bd26996a_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: e4084e89856799e429f94189a6044562, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture2D:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -45,6 +49,7 @@ Material:
     - _IsOuterBeam: 0
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Scroll_Speed: 0.5
     m_Colors:
     - _Beam_Color: {r: 1, g: 0.91764706, b: 0.5254902, a: 0.47058824}
     - _Speed: {r: 1, g: 0, b: 0, a: 0}
