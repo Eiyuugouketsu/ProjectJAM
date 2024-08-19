@@ -76,23 +76,23 @@ public class PlayerScalePower : MonoBehaviour
 
         if (state == ScaleState.Growing)
         {
-            if (currentScalePoints >= maxScalePoints || !currObject.CheckIfCanGrow()) return;
+            if (currentScalePoints <= 0f || !currObject.CheckIfCanGrow()) return;
             float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime * curveFactor, maxScalePoints - currentScalePoints);
             currObject.Grow(pointsSpent * unitsScaledPerScalePoint, transform.position);
-            //Debug.Log($"pointsSpend: {pointsSpent}, deltaTime: {Time.deltaTime}, max: {maxScalePoints - currentScalePoints}, growthAmount: {pointsSpent * unitsScaledPerScalePoint}");
-            currentScalePoints += pointsSpent;
+            // Debug.Log($"pointsSpend: {pointsSpent}, deltaTime: {Time.deltaTime}, max: {maxScalePoints - currentScalePoints}, growthAmount: {pointsSpent * unitsScaledPerScalePoint}");
+            currentScalePoints -= pointsSpent;
             currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
             OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
             elapsedTimeScaling += Time.deltaTime;
         } else if (state == ScaleState.Shrinking)
         {
-            if (currentScalePoints <= 0f) return;
+            if (currentScalePoints >= maxScalePoints) return;
             // This is the most points that can be spent on this object before it would reduce it below it's minimum scale
             float mostPointsSpendable = (currObject.GetCurrentScale() - currObject.GetMinimumScale()) / unitsScaledPerScalePoint;
             float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime * curveFactor, currentScalePoints, mostPointsSpendable);
             currObject.Shrink(pointsSpent * unitsScaledPerScalePoint, transform.position);
             // Debug.Log($"pointsSpend: {pointsSpent}, shrinkAmount: {pointsSpent * unitsScaledPerScalePoint}");
-            currentScalePoints -= pointsSpent;
+            currentScalePoints += pointsSpent;
             currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
             OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
             elapsedTimeScaling += Time.deltaTime;
