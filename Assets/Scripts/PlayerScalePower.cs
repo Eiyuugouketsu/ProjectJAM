@@ -79,7 +79,7 @@ public class PlayerScalePower : MonoBehaviour
             if (currentScalePoints >= maxScalePoints || !currObject.CheckIfCanGrow()) return;
             float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime * curveFactor, maxScalePoints - currentScalePoints);
             currObject.Grow(pointsSpent * unitsScaledPerScalePoint, transform.position);
-            // Debug.Log($"pointsSpend: {pointsSpent}, deltaTime: {Time.deltaTime}, max: {maxScalePoints - currentScalePoints}, growthAmount: {pointsSpent * unitsScaledPerScalePoint}");
+            //Debug.Log($"pointsSpend: {pointsSpent}, deltaTime: {Time.deltaTime}, max: {maxScalePoints - currentScalePoints}, growthAmount: {pointsSpent * unitsScaledPerScalePoint}");
             currentScalePoints += pointsSpent;
             currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
             OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);

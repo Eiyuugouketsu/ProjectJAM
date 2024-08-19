@@ -16,7 +16,7 @@ public class PlayerGrabAbility : MonoBehaviour
     [SerializeField] float throwForce;
 
     // Start is called before the first frame update
-    public void SubscribeToPlayerEvents() 
+    public void Start() 
     {
         PlayerThresholds.Instance.PlayerRaycast.OnMouseOverGrabbableObject += HandleMouseOverGrabbableObject; 
     }
