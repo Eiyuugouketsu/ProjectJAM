@@ -14,12 +14,23 @@ public class PlayerRaycast : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     ScalableObject currentTarget;
     ScalableObject currentGrabbableTarget;
+    private PlayerMode playerMode;
 
+    public void Start()
+    {
+        playerMode = GetComponent<PlayerMode>();
+    }
 
     private void Update()
     {
-        PerformRaycast();
-        PerformGrabRaycast();
+        if (playerMode.GetPlayerState() == PlayerState.Scale)
+        {
+            PerformRaycast();
+        } else
+        {
+            PerformGrabRaycast();
+        }
+                   
     }
 
     public void PerformRaycast(bool forceUpdate = false)
