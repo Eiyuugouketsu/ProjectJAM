@@ -44,6 +44,7 @@ public class LevelManager : MonoBehaviour
         transitionBox = Instantiate(transitionBoxPrefab,level.TransitionBoxSpawn.transform.position, new Quaternion());
         yield return new WaitUntil(() => transitionBox.isActiveAndEnabled);
         var Player = Instantiate(playerPrefab, level.PlayerSpawnPoint.position, new Quaternion());
+        PlayerThresholds.Instance.SubscribeToInnerEvents();
     }
 
     IEnumerator LoadNextLevel()
