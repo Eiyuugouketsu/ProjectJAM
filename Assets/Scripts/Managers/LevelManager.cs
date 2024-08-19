@@ -22,11 +22,19 @@ public class LevelManager : MonoBehaviour
     public void ResetLevel()
     {
         Destroy(PlayerThresholds.Instance.gameObject);
-        Destroy(activeLevel);
-        Destroy(transitionBox);
+        Destroy(activeLevel.gameObject);
+        Destroy(transitionBox.gameObject);
         StopAllCoroutines();
         StartGame(currentLevelId);
     } 
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.P)) // for testings
+        {
+            ResetLevel();
+        }
+    }
 
     IEnumerator LoadLevel(int levelId)
     {
