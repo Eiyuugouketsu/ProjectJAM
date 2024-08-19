@@ -6,10 +6,10 @@ public class PlayerCeilingDetector : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other) 
     {
-        if(other.CompareTag("Ceiling")) PlayerThresholds.Instance.isCeilingAbove = true;
+        if(other.gameObject.layer == LayerMask.NameToLayer("Ceiling")) PlayerThresholds.Instance.isCeilingAbove = true;
     }
     private void OnTriggerExit(Collider other) 
     {
-        if(other.CompareTag("Ceiling")) PlayerThresholds.Instance.isCeilingAbove = false;
+        if(other.gameObject.layer == LayerMask.NameToLayer("Ceiling")) PlayerThresholds.Instance.isCeilingAbove = false;
     }
 }
