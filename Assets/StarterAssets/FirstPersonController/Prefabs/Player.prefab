@@ -633,6 +633,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraRoot: {fileID: 4135013735270702856}
   checkForObjectDistance: 35
+  checkForGrabObjectDistance: 2
   layerMask:
     serializedVersion: 2
     m_Bits: 64
@@ -655,7 +656,25 @@ MonoBehaviour:
   unitsScaledPerScalePoint: 0.1
   scaleRateCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -703,11 +722,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCeilingAbove: 0
-  playerRaycast: {fileID: 8479670071145058830}
-  playerGrabAbility: {fileID: 1623753086302791451}
-  playerScalePower: {fileID: 481049060846510057}
-  playerMode: {fileID: 8361576628246291967}
-  cam: {fileID: 4135013735270702856}
+  PlayerRaycast: {fileID: 8479670071145058830}
+  PlayerGrabAbility: {fileID: 1623753086302791451}
+  PlayerScalePower: {fileID: 481049060846510057}
+  PlayerMode: {fileID: 8361576628246291967}
+  Cam: {fileID: 4135013735270702856}
 --- !u!114 &840914783295406368
 MonoBehaviour:
   m_ObjectHideFlags: 0

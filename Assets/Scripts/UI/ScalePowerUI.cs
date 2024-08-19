@@ -10,7 +10,7 @@ public class ScalePowerUI : MonoBehaviour
 
     public void SubscribeToPlayerEvents()
     {
-        PlayerThresholds.Instance.playerScalePower.OnUpdateScalePoints += PlayerScalePower_OnUpdateScalePoints;
+        PlayerThresholds.Instance.PlayerScalePower.OnUpdateScalePoints += PlayerScalePower_OnUpdateScalePoints;
     }
 
     private void PlayerScalePower_OnUpdateScalePoints(float newValuePercent)

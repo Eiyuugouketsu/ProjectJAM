@@ -8,8 +8,6 @@ public class PlayerGrabAbility : MonoBehaviour
 {
     public event Action<ScalableObject> OnObjectPickedUp;
     public event Action OnObjectDropped;
-
-    private PlayerMode playerMode;
     private PlayerRaycast playerRaycast;
     ScalableObject currObject;
     ScalableObject grabbedObject;
@@ -17,15 +15,9 @@ public class PlayerGrabAbility : MonoBehaviour
     [SerializeField] private Transform holdPos;
 
     // Start is called before the first frame update
-    void Start()
+    private void OnEnable() 
     {
-        playerMode = GetComponent<PlayerMode>();
-        playerRaycast = GetComponent<PlayerRaycast>();
-
-        if (playerRaycast != null)
-        {
-            playerRaycast.OnMouseOverGrabbableObject += HandleMouseOverGrabbableObject;
-        }
+        PlayerThresholds.Instance.PlayerRaycast.OnMouseOverGrabbableObject += HandleMouseOverGrabbableObject; 
     }
 
     void Update()
@@ -53,7 +45,7 @@ public class PlayerGrabAbility : MonoBehaviour
 
     public void OnPickUpDrop()
     {
-        if (playerMode.GetPlayerState() == PlayerState.Scale) return;
+        if (PlayerThresholds.Instance.PlayerMode.GetPlayerState() == PlayerState.Scale) return;
         if (isHoldingObject)
         {
             DropObject();

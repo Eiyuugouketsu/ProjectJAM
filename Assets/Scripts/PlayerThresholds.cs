@@ -26,11 +26,11 @@ public class PlayerThresholds : MonoBehaviour
     [SerializeField] private static float throwForce = 250f;
     [SerializeField] private static float holdDistance = 2f;
     public bool isCeilingAbove;
-    public PlayerRaycast playerRaycast;
-    public PlayerGrabAbility playerGrabAbility;
-    public PlayerScalePower playerScalePower;
-    public PlayerMode playerMode;
-    public Transform cam;
+    public PlayerRaycast PlayerRaycast;
+    public PlayerGrabAbility PlayerGrabAbility;
+    public PlayerScalePower PlayerScalePower;
+    public PlayerMode PlayerMode;
+    public Transform Cam;
 
     public float GetMaxPushMass()
     {
