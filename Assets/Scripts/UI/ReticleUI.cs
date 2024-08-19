@@ -38,13 +38,6 @@ public class ReticleUI : MonoBehaviour
 
     void Start()
     {
-        // Remove once we have the level manager working
-        SubscribeToPlayerEvents();
-    }
-
-    public void SubscribeToPlayerEvents()
-    {
-        Debug.Log(PlayerThresholds.Instance.PlayerRaycast);
         PlayerThresholds.Instance.PlayerRaycast.OnMouseOverScalableObject += Player_OnMouseOverScalableObject;
         PlayerThresholds.Instance.PlayerRaycast.OnMouseOverGrabbableObject += Player_OnMouseOverScalableObject;
         PlayerThresholds.Instance.PlayerMode.OnChangePlayerState += Player_OnChangePlayerState;
