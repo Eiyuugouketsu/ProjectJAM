@@ -703,6 +703,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isCeilingAbove: 0
+  playerRaycast: {fileID: 8479670071145058830}
+  playerGrabAbility: {fileID: 1623753086302791451}
+  playerScalePower: {fileID: 481049060846510057}
+  playerMode: {fileID: 8361576628246291967}
+  cam: {fileID: 4135013735270702856}
 --- !u!114 &840914783295406368
 MonoBehaviour:
   m_ObjectHideFlags: 0
