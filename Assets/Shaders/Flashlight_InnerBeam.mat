@@ -51,8 +51,8 @@ Material:
     - _QueueOffset: 0
     - _Scroll_Speed: 0.5
     m_Colors:
-    - _Beam_Color: {r: 1, g: 0.9176946, b: 0.52515715, a: 0.4705882}
-    - _Speed: {r: 0.5, g: 0, b: 0, a: 0}
+    - _Beam_Color: {r: 1, g: 0.91764706, b: 0.5254902, a: 0.47058824}
+    - _Speed: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8337103928782476148
 MonoBehaviour:
