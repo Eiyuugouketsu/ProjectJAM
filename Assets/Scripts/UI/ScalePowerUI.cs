@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class ScalePowerUI : MonoBehaviour
 {
-    [SerializeField] PlayerScalePower player;
     [SerializeField] Image barFrontGrow;
     [SerializeField] Image barFrontShrink;
 
-    void Start()
+    public void SubscribeToPlayerEvents()
     {
-        player.OnUpdateScalePoints += PlayerScalePower_OnUpdateScalePoints;
+        PlayerThresholds.Instance.playerScalePower.OnUpdateScalePoints += PlayerScalePower_OnUpdateScalePoints;
     }
 
     private void PlayerScalePower_OnUpdateScalePoints(float newValuePercent)
