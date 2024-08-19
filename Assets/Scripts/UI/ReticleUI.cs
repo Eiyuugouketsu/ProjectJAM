@@ -117,6 +117,12 @@ public class ReticleUI : MonoBehaviour
 
         if (currentTarget != null)
         {
+            if (!currentTarget.GetIsInteractable())
+            {
+                SetReticleState(ReticleState.Blocked);
+                return;
+            }
+
             if (playerMode.GetPlayerState() == PlayerState.Grab)
             {
                 float objectMass = currentTarget.GetMass();
@@ -135,6 +141,8 @@ public class ReticleUI : MonoBehaviour
 
                 bool isTryingToGrow = playerScalePower.GetState() == ScaleState.Growing;
                 bool isTryingToShrink = playerScalePower.GetState() == ScaleState.Shrinking;
+
+                // Debug.Log($"canShrink: {canShrink}, canGrow: {canGrow}, isTryingToGrow: {isTryingToGrow}, isTryingToShrink: {isTryingToShrink}");
 
                 if ((isTryingToGrow && !canGrow) || (isTryingToShrink && !canShrink)) SetReticleState(ReticleState.Blocked);
                 else if (canShrink && canGrow) SetReticleState(ReticleState.Both);
