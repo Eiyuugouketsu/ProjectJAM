@@ -115,6 +115,7 @@ namespace StarterAssets
 			JumpAndGravity();
 			GroundedCheck();
 			Move();
+			Debug.Log(_verticalVelocity);
 		}
 
 		private void LateUpdate()
