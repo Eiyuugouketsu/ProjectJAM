@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932a279cede94a94bb05e2191837551c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleSpeed: 0.5
   minimumScale: 1
   rb: {fileID: 3031985171949162686}
   outlineManager: {fileID: 596975398322128481}
@@ -152,7 +151,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &596975398322128481
 MonoBehaviour:
   m_ObjectHideFlags: 0

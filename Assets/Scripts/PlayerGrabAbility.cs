@@ -13,6 +13,7 @@ public class PlayerGrabAbility : MonoBehaviour
     ScalableObject grabbedObject;
     public bool isHoldingObject = false;
     [SerializeField] private Transform holdPos;
+    [SerializeField] float throwForce;
 
     // Start is called before the first frame update
     private void OnEnable() 
@@ -57,7 +58,8 @@ public class PlayerGrabAbility : MonoBehaviour
 
     public void OnThrow()
     {
-        if (isHoldingObject && currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.GetMaxThrowMass())
+        // Debug.Log($"isHoldingObject: {isHoldingObject} currNull: {currObject != null} currmass: {currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.GetMaxThrowMass()}");
+        if (isHoldingObject && grabbedObject != null && grabbedObject.GetMass() <= PlayerThresholds.Instance.GetMaxThrowMass())
         {
             ThrowObject();
         }
@@ -90,10 +92,9 @@ public class PlayerGrabAbility : MonoBehaviour
     {
         isHoldingObject = false;
 
-        grabbedObject.SetIsKinematic(true);
-        grabbedObject.ApplyForce(holdPos.forward);
-
+        grabbedObject.SetIsKinematic(false);
         grabbedObject.transform.SetParent(null);
+        grabbedObject.ApplyForce(holdPos.forward.normalized * throwForce);
         OnObjectDropped?.Invoke();
     }
 
