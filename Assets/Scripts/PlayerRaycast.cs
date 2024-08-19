@@ -14,16 +14,10 @@ public class PlayerRaycast : MonoBehaviour
     [SerializeField] LayerMask layerMask;
     ScalableObject currentTarget;
     ScalableObject currentGrabbableTarget;
-    private PlayerMode playerMode;
-
-    public void Start()
-    {
-        playerMode = GetComponent<PlayerMode>();
-    }
 
     private void Update()
     {
-        if (playerMode.GetPlayerState() == PlayerState.Scale)
+        if (PlayerThresholds.Instance.PlayerMode.GetPlayerState() == PlayerState.Scale)
         {
             PerformRaycast();
         } else
@@ -46,7 +40,7 @@ public class PlayerRaycast : MonoBehaviour
             {
                 currentTarget.GetComponent<OutlineManager>().ToggleOutlineActive(false);
             }
-            OnMouseOverScalableObject(null);
+            OnMouseOverScalableObject?.Invoke(null);
             currentTarget = null;
             return;
         }
@@ -76,7 +70,7 @@ public class PlayerRaycast : MonoBehaviour
             {
                 currentGrabbableTarget.GetComponent<OutlineManager>().ToggleOutlineActive(false);
             }
-            OnMouseOverGrabbableObject(null);
+            OnMouseOverGrabbableObject?.Invoke(null);
             currentGrabbableTarget = null;
             return;
         }

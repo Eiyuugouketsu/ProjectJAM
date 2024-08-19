@@ -40,13 +40,13 @@ public class ReticleUI : MonoBehaviour
 
     public void SubscribeToPlayerEvents()
     {
-        PlayerThresholds.Instance.playerRaycast.OnMouseOverScalableObject += Player_OnMouseOverScalableObject;
-        PlayerThresholds.Instance.playerGrabAbility.OnObjectPickedUp += PlayerGrabAbility_OnObjectPickedUp;
-        PlayerThresholds.Instance.playerGrabAbility.OnObjectDropped += PlayerGrabAbility_OnObjectDropped;
-        PlayerThresholds.Instance.playerScalePower.OnUpdateScalePoints += PlayerScalePower_OnUpdateScalePoints;
-        playerGrabAbility = PlayerThresholds.Instance.playerGrabAbility;
-        playerScalePower = PlayerThresholds.Instance.playerScalePower;
-        playerMode = PlayerThresholds.Instance.playerMode;
+        PlayerThresholds.Instance.PlayerRaycast.OnMouseOverScalableObject += Player_OnMouseOverScalableObject;
+        PlayerThresholds.Instance.PlayerGrabAbility.OnObjectPickedUp += PlayerGrabAbility_OnObjectPickedUp;
+        PlayerThresholds.Instance.PlayerGrabAbility.OnObjectDropped += PlayerGrabAbility_OnObjectDropped;
+        PlayerThresholds.Instance.PlayerScalePower.OnUpdateScalePoints += PlayerScalePower_OnUpdateScalePoints;
+        playerGrabAbility = PlayerThresholds.Instance.PlayerGrabAbility;
+        playerScalePower = PlayerThresholds.Instance.PlayerScalePower;
+        playerMode = PlayerThresholds.Instance.PlayerMode;
         reticleImage.sprite = defaultSprite;
     }
 

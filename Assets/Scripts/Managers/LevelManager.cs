@@ -56,7 +56,7 @@ public class LevelManager : MonoBehaviour
     {
         currentLevelId = levelId;
         yield return LoadLevel(levelId);
-        GameManager.Instance.playerCamera.Follow = PlayerThresholds.Instance.cam;
+        GameManager.Instance.playerCamera.Follow = PlayerThresholds.Instance.Cam;
         GameManager.Instance.UIManager.PlayerSpawn();
         while(currentLevelId +1 < Levels.Count)
         {

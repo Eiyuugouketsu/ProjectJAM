@@ -54,6 +54,7 @@ public class ScalableObject : MonoBehaviour
     {
         this.playerPosition = playerPosition;
         if (CheckIfCanGrow()) destinationScale = destinationScale + growAmount;
+
     }
 
     public void Shrink(float shrinkAmount, Vector3 playerPosition)
