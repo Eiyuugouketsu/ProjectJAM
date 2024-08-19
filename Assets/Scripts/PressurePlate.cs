@@ -11,6 +11,8 @@ public class PressurePlate : MonoBehaviour
     [SerializeField] float massNeeded;
     public event Action OnPressurePlateActivate;
     List<ScalableObject> scalableObjects = new List<ScalableObject>();
+    float yMax = 2f;
+    float targetY;
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("ScalableObject"))
@@ -34,5 +36,8 @@ public class PressurePlate : MonoBehaviour
         {
             OnPressurePlateActivate?.Invoke();
         }
+        targetY = Mathf.Lerp(yMax,0,sum/massNeeded);
+        Vector3 newPos = new Vector3(transform.localPosition.x, Mathf.Lerp(transform.localPosition.y,targetY,0.2f), transform.localPosition.z);
+        transform.localPosition = newPos;
     }
 }
