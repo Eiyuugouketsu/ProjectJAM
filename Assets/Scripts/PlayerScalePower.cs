@@ -13,6 +13,7 @@ public enum ScaleState {
 public class PlayerScalePower : MonoBehaviour
 {
     public event Action<float> OnUpdateScalePoints;
+    public event Action<ScaleState> OnChangeScaleState;
     [SerializeField] PlayerMode playerMode;
     [SerializeField] float startingScalePoints = 50f;
     [SerializeField] float maxScalePoints = 100f;
@@ -57,6 +58,10 @@ public class PlayerScalePower : MonoBehaviour
     {
         if (playerMode.GetPlayerState() == PlayerState.Grab)
         {
+            if (state != ScaleState.None)
+            {
+                OnChangeScaleState(ScaleState.None);
+            }
             state = ScaleState.None;
             elapsedTimeScaling = 0f;
             return;
@@ -112,13 +117,29 @@ public class PlayerScalePower : MonoBehaviour
     public void OnGrowObject(InputValue value)
     {
         if (playerMode.GetPlayerState() == PlayerState.Grab || state == ScaleState.Shrinking) return;
-        state = value.isPressed ? ScaleState.Growing : ScaleState.None;
+        ScaleState newState = value.isPressed ? ScaleState.Growing : ScaleState.None;
+        if (newState != state)
+        {
+            OnChangeScaleState?.Invoke(newState);
+        }
+        state = newState;
     }
 
     public void OnShrinkObject(InputValue value)
     {
         if (playerMode.GetPlayerState() == PlayerState.Grab || state == ScaleState.Growing) return;
-        state = value.isPressed ? ScaleState.Shrinking : ScaleState.None;
+        ScaleState newState = value.isPressed ? ScaleState.Shrinking : ScaleState.None;
+        if (newState != state)
+        {
+            OnChangeScaleState?.Invoke(newState);
+        }
+        state = newState;
+        
+    }
+
+    public ScaleState GetState()
+    {
+        return state;
     }
 
     public float GetCurrentScalePoints()

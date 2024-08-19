@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3073442837682220993}
   - component: {fileID: 8980129123374789115}
   - component: {fileID: 8155713960811063585}
-  - component: {fileID: 5961663383860132705}
   - component: {fileID: 8202600333176349027}
   - component: {fileID: -3687714741168471828}
   - component: {fileID: -5146635449879652454}
@@ -122,22 +121,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5251d00347ff4434a9e6e6b047e4f578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5961663383860132705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1327748538884088611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932a279cede94a94bb05e2191837551c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minimumScale: 0.5
+  minimumScale: 1
   rb: {fileID: 8202600333176349027}
-  outlineManager: {fileID: 0}
+  outlineManager: {fileID: -5146635449879652454}
   touchingObjects: []
+  keyId: 
 --- !u!54 &8202600333176349027
 Rigidbody:
   m_ObjectHideFlags: 0
