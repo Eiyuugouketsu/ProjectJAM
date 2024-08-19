@@ -32,6 +32,11 @@ public class PlayerThresholds : MonoBehaviour
     public PlayerMode PlayerMode;
     public Transform Cam;
 
+    public void SubscribeToInnerEvents()
+    {
+        PlayerGrabAbility.SubscribeToPlayerEvents();
+    }
+
     public float GetMaxPushMass()
     {
         return maxPushMass;
