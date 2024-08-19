@@ -650,6 +650,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMode: {fileID: 8361576628246291967}
+  flashlightBeamMaterials:
+  - {fileID: 2100000, guid: 482ab995e08309644aea452a251b95da, type: 2}
+  - {fileID: 2100000, guid: 38ee86df4e638cd479c882129de4310a, type: 2}
+  flashlightLight: {fileID: 6899122706797573792}
+  baseColor: {r: 1, g: 0.91764706, b: 0.5254902, a: 0.47058824}
+  growColor: {r: 0.8862745, g: 0.12156863, b: 0.14509805, a: 0.47058824}
+  shrinkColor: {r: 0.3137255, g: 0.654902, b: 0.77254903, a: 0.47058824}
   startingScalePoints: 50
   maxScalePoints: 100
   scalePointsPerSecond: 10
@@ -709,6 +716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHoldingObject: 0
   holdPos: {fileID: 4387616660468250595}
+  throwForce: 0
 --- !u!114 &2128592765249450928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -799,6 +807,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 13
       objectReference: {fileID: 0}
+    - target: {fileID: 8461628350357937631, guid: 8ec1286bc576294438755009b920c4a0, type: 3}
+      propertyPath: m_Intensity
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -807,5 +819,10 @@ PrefabInstance:
 --- !u!4 &5223092691711688709 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7110905128682498938, guid: 8ec1286bc576294438755009b920c4a0, type: 3}
+  m_PrefabInstance: {fileID: 3085851587473943423}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &6899122706797573792 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 8461628350357937631, guid: 8ec1286bc576294438755009b920c4a0, type: 3}
   m_PrefabInstance: {fileID: 3085851587473943423}
   m_PrefabAsset: {fileID: 0}
