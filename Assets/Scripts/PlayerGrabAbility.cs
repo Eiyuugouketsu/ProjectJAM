@@ -12,6 +12,7 @@ public class PlayerGrabAbility : MonoBehaviour
     private PlayerMode playerMode;
     private PlayerRaycast playerRaycast;
     ScalableObject currObject;
+    ScalableObject grabbedObject;
     public bool isHoldingObject = false;
     [SerializeField] private Transform holdPos;
 
@@ -23,7 +24,7 @@ public class PlayerGrabAbility : MonoBehaviour
 
         if (playerRaycast != null)
         {
-            playerRaycast.OnMouseOverGrabbableObject += HandleMouseOverScalableObject;
+            playerRaycast.OnMouseOverGrabbableObject += HandleMouseOverGrabbableObject;
         }
     }
 
@@ -35,12 +36,12 @@ public class PlayerGrabAbility : MonoBehaviour
         }
     }
 
-    private void HandleMouseOverScalableObject(ScalableObject scalableObject)
+    private void HandleMouseOverGrabbableObject(ScalableObject grabbableObject)
     {
 
-        if (scalableObject != null)
+        if (grabbableObject != null)
         {
-            currObject = scalableObject;
+            currObject = grabbableObject;
             //Debug.Log("Mouse is over a scalable object: " + scalableObject.name);
         }
         else
@@ -73,21 +74,23 @@ public class PlayerGrabAbility : MonoBehaviour
     private void GrabObject()
     {
         isHoldingObject = true;
+        grabbedObject = currObject;
 
-        currObject.SetIsKinematic(true);
-
-        currObject.transform.position = holdPos.position;
-        currObject.transform.SetParent(holdPos);
-        OnObjectPickedUp(currObject);
+        grabbedObject.SetIsKinematic(true);
+        grabbedObject.transform.position = holdPos.position;
+        grabbedObject.transform.SetParent(holdPos);
+        OnObjectPickedUp?.Invoke(grabbedObject);
     }
 
     private void DropObject()
     {
         isHoldingObject = false;
 
-        currObject.SetIsKinematic(false);
+        grabbedObject.SetIsKinematic(false);
 
-        currObject.transform.SetParent(null);
+        grabbedObject.transform.SetParent(null);
+        grabbedObject = null;
+
         OnObjectDropped?.Invoke();
     }
 
@@ -95,16 +98,16 @@ public class PlayerGrabAbility : MonoBehaviour
     {
         isHoldingObject = false;
 
-        currObject.SetIsKinematic(true);
-        currObject.ApplyForce(holdPos.forward);
+        grabbedObject.SetIsKinematic(true);
+        grabbedObject.ApplyForce(holdPos.forward);
 
-        currObject.transform.SetParent(null);
+        grabbedObject.transform.SetParent(null);
         OnObjectDropped?.Invoke();
     }
 
     public ScalableObject GetCurrentObject()
     {
-        return currObject;
+        return grabbedObject;
     }
 
     public bool GetIsHoldingObject()
