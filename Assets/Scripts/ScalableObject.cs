@@ -8,6 +8,8 @@ public class ScalableObject : MonoBehaviour
     [SerializeField] float minimumScale;
     [SerializeField] protected Rigidbody rb;
     [SerializeField] OutlineManager outlineManager;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip[] collisionClips;
     [SerializeField] bool freezedUntillTouched;
     float baseMass;
     float baseScale;
@@ -20,6 +22,8 @@ public class ScalableObject : MonoBehaviour
     Vector3 playerPosition;
 
     bool interactable = true;
+
+    float collisionSoundTimeout = 1f;
 
     private void Awake()
     {
@@ -35,11 +39,22 @@ public class ScalableObject : MonoBehaviour
     private void OnCollisionEnter(Collision other) 
     {
         touchingObjects.Add(other.gameObject);
+        PlayCollisionSound();
     }
 
     private void OnCollisionExit(Collision other) 
     {
         touchingObjects.Remove(other.transform.gameObject);
+    }
+
+    void PlayCollisionSound()
+    {
+        if (collisionSoundTimeout <= 0f)
+        {
+            audioSource.clip = collisionClips[Random.Range(0, collisionClips.Length)];
+            audioSource.Play();
+            collisionSoundTimeout = Random.Range(0f, 1f);
+        }
     }
 
     public bool CheckIfCanGrow()
@@ -67,6 +82,11 @@ public class ScalableObject : MonoBehaviour
         rb.constraints = RigidbodyConstraints.None;
         this.playerPosition = playerPosition;
         if (CheckIfCanShrink()) destinationScale = Mathf.Max(minimumScale, destinationScale - shrinkAmount);
+    }
+
+    void Update()
+    {
+        if (collisionSoundTimeout > 0) collisionSoundTimeout -= Time.deltaTime;
     }
 
     private void FixedUpdate() 
