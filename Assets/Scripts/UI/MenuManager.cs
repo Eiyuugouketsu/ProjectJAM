@@ -132,31 +132,29 @@ public class MenuManager : MonoBehaviour
 
     public void PauseGame()
     {
-        isPaused = true;
         fpsController = FindObjectOfType<FirstPersonController>();
 
         if (fpsController != null) fpsController.enabled = false;
         pauseMenu.SetActive(true);
-       
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         pauseAnimator.Play("menuOpen");
         Time.timeScale = 0f;
-       
+        isPaused = true;
         Debug.Log("Timescale is: " + Time.timeScale);
     }
 
     public void ResumeGame()
     {
-        Debug.Log("Resuming");
         StartCoroutine(ResumeGameAnimation());
     }
 
     IEnumerator ResumeGameAnimation()
     {
-        pauseAnimator.Play("menuClose");
+        yield return new WaitForSeconds(3);
+        pauseMenu.SetActive(false);
         Time.timeScale = 1f;
-        //pauseMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         isPaused = false;
