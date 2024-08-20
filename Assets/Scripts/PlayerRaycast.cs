@@ -63,7 +63,7 @@ public class PlayerRaycast : MonoBehaviour
         Debug.DrawLine(cameraRoot.transform.position, cameraRoot.transform.position + (cameraRoot.forward).normalized * checkForGrabObjectDistance, Color.blue);
         RaycastHit grabHit;
         Physics.Raycast(cameraRoot.transform.position, cameraRoot.forward, out grabHit, checkForGrabObjectDistance, layerMask);
-
+        
         if (!grabHit.collider || !grabHit.collider.gameObject)
         {
             if (currentTarget != null)

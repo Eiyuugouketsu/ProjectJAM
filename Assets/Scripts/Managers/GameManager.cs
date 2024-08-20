@@ -27,10 +27,7 @@ public class GameManager : MonoBehaviour
 
     public void Start() // for testings
     {
-        if(SceneManager.GetActiveScene().buildIndex == 0)
-        {
-            levelManager.StartGame(0);
-        }
+        levelManager.StartGame(SceneManager.GetActiveScene().buildIndex+1);
     }
 
     // public void StartGame(levelId)
