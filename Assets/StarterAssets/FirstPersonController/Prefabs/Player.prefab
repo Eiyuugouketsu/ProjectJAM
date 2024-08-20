@@ -793,9 +793,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraRoot: {fileID: 4135013735270702856}
-  holdPos: {fileID: 0}
   checkForObjectDistance: 35
-  checkForGrabObjectDistance: 2
+  checkForGrabObjectDistance: 5
   layerMask:
     serializedVersion: 2
     m_Bits: 64
