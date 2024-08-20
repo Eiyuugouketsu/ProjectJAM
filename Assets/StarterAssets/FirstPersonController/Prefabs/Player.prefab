@@ -24,12 +24,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2226061167479929640}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.219, z: 2.736}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.15600002, z: 2.736}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8997996947095583982}
+  m_Father: {fileID: 4135013735270702856}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3616673430428065617
 GameObject:
@@ -94,6 +94,7 @@ Transform:
   - {fileID: 5223092691711688709}
   - {fileID: 4895788239509323393}
   - {fileID: 1824224578698217780}
+  - {fileID: 4387616660468250595}
   m_Father: {fileID: 8997996947095583982}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4262024966468281619
@@ -585,7 +586,6 @@ Transform:
   m_Children:
   - {fileID: 4135013735270702856}
   - {fileID: 5393215578589016641}
-  - {fileID: 4387616660468250595}
   - {fileID: 3917709092417832375}
   - {fileID: 6318651117588698991}
   - {fileID: 1514257482895698814}
@@ -793,6 +793,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraRoot: {fileID: 4135013735270702856}
+  holdPos: {fileID: 0}
   checkForObjectDistance: 35
   checkForGrabObjectDistance: 2
   layerMask:
@@ -899,6 +900,7 @@ MonoBehaviour:
   PlayerScalePower: {fileID: 481049060846510057}
   PlayerMode: {fileID: 8361576628246291967}
   Cam: {fileID: 4135013735270702856}
+  haveFlashlight: 0
 --- !u!114 &840914783295406368
 MonoBehaviour:
   m_ObjectHideFlags: 0
