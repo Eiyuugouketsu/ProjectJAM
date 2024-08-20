@@ -8,12 +8,6 @@ public class LevelManager : MonoBehaviour
 {
     int currentLevelId = 0;
     public bool LevelCompleted;
-
-    private void Awake() 
-    {
-        
-    }
-
     public void StartGame(int levelId)
     {
         StartCoroutine(Process(levelId));
@@ -30,6 +24,10 @@ public class LevelManager : MonoBehaviour
         {
             ResetLevel();
         }
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            LevelCompleted = true;
+        }
     }
 
     void LoadLevel(int levelId)
@@ -45,7 +43,7 @@ public class LevelManager : MonoBehaviour
     {
         currentLevelId = levelId;
         LoadLevel(levelId);
-        while(currentLevelId +1 < 5)
+        while(currentLevelId +1 < 10)
         {
             yield return new WaitUntil(() => LevelCompleted);
             LevelCompleted = false;

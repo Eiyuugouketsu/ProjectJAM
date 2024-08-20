@@ -74,7 +74,7 @@ public class Keyhole : MonoBehaviour
 
     void OpenDoor()
     {
-        doorController.UpdateDoorState(DoorController.DoorState.open);
+        doorController.UpdateDoorState(DoorState.open);
     }
 
     IEnumerator SlideKey(Transform keyTransform)

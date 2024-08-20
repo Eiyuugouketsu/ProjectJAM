@@ -31,6 +31,7 @@ public class PlayerThresholds : MonoBehaviour
     public PlayerScalePower PlayerScalePower;
     public PlayerMode PlayerMode;
     public Transform Cam;
+    public bool haveFlashlight;
     public float GetMaxPushMass()
     {
         return maxPushMass;

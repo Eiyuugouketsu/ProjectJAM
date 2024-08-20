@@ -51,7 +51,8 @@ public class PlayerGrabAbility : MonoBehaviour
         {
             DropObject();
         }
-        else if (currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.getMaxCarryMass() && currObject.GetIsInteractable()) { 
+        else if (currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.getMaxCarryMass() && currObject.GetIsInteractable()) {
+            Debug.Log("test");
             GrabObject();
         }
     }
@@ -87,7 +88,6 @@ public class PlayerGrabAbility : MonoBehaviour
 
         OnObjectDropped?.Invoke();
     }
-
     private void ThrowObject()
     {
         isHoldingObject = false;

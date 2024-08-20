@@ -134,7 +134,6 @@ public class PlayerScalePower : MonoBehaviour
             OnChangeScaleState?.Invoke(newState);
         }
         state = newState;
-        
     }
 
     public ScaleState GetState()
