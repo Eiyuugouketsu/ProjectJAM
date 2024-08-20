@@ -12,7 +12,6 @@ public class TransitionBox : MonoBehaviour
     [SerializeField] float afterFadeTime = 2f;
 
     float afterFadeTimer = 0f;
-
     void OnEnable()
     {
         transitionTrigger.OnEventTriggerEnter += TransitionToNextScene;
@@ -43,6 +42,7 @@ public class TransitionBox : MonoBehaviour
         GameManager.Instance.levelManager.LevelCompleted = true;
         Destroy(transitionTrigger.gameObject);
     }
+
 
     public void DisableAndDestroy()
     {

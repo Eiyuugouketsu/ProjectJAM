@@ -42,7 +42,6 @@ public class PlayerGrabAbility : MonoBehaviour
             DropObject();
         }
         else if (currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.getMaxCarryMass() && currObject.GetIsInteractable()) {
-            Debug.Log("test");
             GrabObject();
         }
     }

@@ -59,7 +59,7 @@ public class PlayerScalePower : MonoBehaviour
         {
             playerRaycast.OnMouseOverScalableObject += HandleMouseOverScalableObject;
         }
-
+    
         OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
     }
 

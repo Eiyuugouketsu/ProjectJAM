@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance {get; set;}
     public LevelManager levelManager;
     public UIManager UIManager;
+    public MenuManager MenuManager; 
     private void Awake()
     {
         if(Instance != null && Instance !=this)
