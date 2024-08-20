@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public LevelManager levelManager;
     public UIManager UIManager;
     public MenuManager MenuManager; 
+    public CanvasGroup endScreen;
     private void Awake()
     {
         if(Instance != null && Instance !=this)
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         DontDestroyOnLoad(levelManager.gameObject);
         DontDestroyOnLoad(UIManager.gameObject);
+        DontDestroyOnLoad(endScreen.gameObject);
     }
 
     public void StartGame()
