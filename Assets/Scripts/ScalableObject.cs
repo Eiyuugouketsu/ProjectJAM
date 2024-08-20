@@ -20,6 +20,8 @@ public class ScalableObject : MonoBehaviour
     float touchingWalls => touchingObjects.Count(obj => obj.gameObject.layer == LayerMask.NameToLayer("Wall"));
     float destinationScale;
     Vector3 playerPosition;
+    Transform followGrabPos;
+    public bool isBeingHeld;
 
     bool interactable = true;
 
@@ -87,6 +89,7 @@ public class ScalableObject : MonoBehaviour
     void Update()
     {
         if (collisionSoundTimeout > 0) collisionSoundTimeout -= Time.deltaTime;
+        if(isBeingHeld) rb.velocity = (followGrabPos.position - transform.position)*10;
     }
 
     private void FixedUpdate() 
@@ -115,9 +118,18 @@ public class ScalableObject : MonoBehaviour
         rb.isKinematic = value;
     }
 
-    public bool GetIsKinematic()
+    virtual public void ObjectPickedUp(Transform holdPos)
     {
-        return rb.isKinematic;
+        rb.constraints = RigidbodyConstraints.None;
+        isBeingHeld = true;
+        followGrabPos = holdPos;
+        rb.useGravity = false;
+    }
+
+    public void ObjectDropped()
+    {
+        isBeingHeld = false;
+        rb.useGravity = true;
     }
 
     public void ApplyForce(Vector3 holdPosForward)
