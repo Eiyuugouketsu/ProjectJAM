@@ -5022,6 +5022,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8218430465287440483, guid: 9c489a8547f4d9e4387da15a4ff82c81, type: 3}
+      propertyPath: m_DefaultVelocity.y
+      value: -0.02
+      objectReference: {fileID: 0}
     - target: {fileID: 8762286023885395077, guid: 9c489a8547f4d9e4387da15a4ff82c81, type: 3}
       propertyPath: m_Name
       value: PlayerFollowCamera
