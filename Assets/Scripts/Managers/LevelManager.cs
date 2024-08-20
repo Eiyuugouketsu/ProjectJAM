@@ -6,8 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] CanvasGroup endCanvas;
+    [SerializeField] AudioSource audioSource; 
     int currentLevelId = 1;
     public bool LevelCompleted = false;
+    [SerializeField] float fadeTime = 2f;
     public void StartGame()
     {
         StartCoroutine(Process());
@@ -48,8 +51,13 @@ public class LevelManager : MonoBehaviour
             LevelCompleted = false;
             currentLevelId ++;
             LoadNextLevel();
-            Debug.Log("test1");
         }
-        Debug.Log("test");
+        VOTrigger.audioQueue.Clear();
+        audioSource.Play();
+        while (endCanvas.alpha < 1f)
+        {
+            endCanvas.alpha += Time.deltaTime / fadeTime;
+            yield return null;
+        }
     }
 }

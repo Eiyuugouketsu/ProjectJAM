@@ -154,7 +154,7 @@ public class MenuManager : MonoBehaviour
 
     IEnumerator ResumeGameAnimation()
     {
-        pauseAnimator.Play("menuClose");
+        //pauseAnimator.Play("menuClose");
         Time.timeScale = 1f;
         //pauseMenu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
