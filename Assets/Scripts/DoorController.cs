@@ -20,6 +20,7 @@ public class DoorController : MonoBehaviour
         }
     }
 
+    [SerializeField] Animator animator;
     //Optional future values
     private bool isKeyAligned;
 
@@ -27,20 +28,6 @@ public class DoorController : MonoBehaviour
     private float KeyMinSize; 
     [Range(0.25f, 1.75f)]
     private float KeyMaxSize; 
-    
-
-    //Removable values(just for testing if logic works)
-    [SerializeField]
-    private GameObject doorLeft, doorRight;
-    [SerializeField]
-    private Transform openPosL , openPosR;
-    private Vector3 posL , posR;
-    void Start()
-    {
-        posL = doorLeft.transform.position;
-        posR = doorRight.transform.position;
-    }
-
     public void UpdateDoorState(DoorState currDoorState)
     {
         switch (currDoorState)
@@ -56,14 +43,12 @@ public class DoorController : MonoBehaviour
         }
     }
 
-    private void OpeningState(){
-        //Opening Sequence
-        doorLeft.transform.position = openPosL.position;
-        doorRight.transform.position = openPosR.position;
+    private void OpeningState()
+    {
+        animator.SetBool("IsOpened",true);
     }
-    private void ClosingState(){
-        //Closing Sequence
-        doorLeft.transform.position = posL;
-        doorRight.transform.position = posR;
+    private void ClosingState()
+    {
+        animator.SetBool("IsOpened",false);
     }
 }
