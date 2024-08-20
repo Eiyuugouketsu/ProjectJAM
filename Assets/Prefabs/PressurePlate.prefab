@@ -155,7 +155,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   massNeeded: 20
+  timeToSink: 0.5
+  sunkPosition: {x: 0, y: 0, z: 0}
   doorController: {fileID: 0}
+  audioSource: {fileID: 4219753244480981103}
 --- !u!65 &1923499569064878579
 BoxCollider:
   m_ObjectHideFlags: 0
