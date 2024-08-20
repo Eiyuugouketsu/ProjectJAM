@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Keyhole : MonoBehaviour
 {
@@ -26,6 +27,7 @@ public class Keyhole : MonoBehaviour
 
     bool activated = false;
 
+    public UnityEvent onUnlock;
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<KeyScript>())
@@ -65,6 +67,8 @@ public class Keyhole : MonoBehaviour
 
     void Activate(KeyScript key)
     {
+        onUnlock?.Invoke();
+
         activated = true;
         Vector3 keyStartingPosition = keySetTransform.position + (transform.forward * -1f * keySlideDistance);
         key.transform.position = keyStartingPosition;
