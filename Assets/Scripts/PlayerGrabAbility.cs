@@ -84,10 +84,9 @@ public class PlayerGrabAbility : MonoBehaviour
     private void ThrowObject()
     {
         isHoldingObject = false;
-
-        grabbedObject.SetIsKinematic(false);
-        grabbedObject.transform.SetParent(null);
+        grabbedObject.ObjectDropped();
         grabbedObject.ApplyForce(holdPos.forward.normalized * throwForce);
+        grabbedObject = null;
         OnObjectDropped?.Invoke();
     }
 
