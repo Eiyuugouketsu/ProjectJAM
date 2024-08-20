@@ -7,6 +7,7 @@ public class TransitionBox : MonoBehaviour
     [SerializeField] Trigger transitionTrigger;
     [SerializeField] AudioSource audioSource;
     [SerializeField] CanvasGroup fadeCanvasGroup;
+    [SerializeField] DoorController doorController;
     [SerializeField] float fadeTime = 2f;
     [SerializeField] float afterFadeTime = 2f;
 
@@ -24,12 +25,16 @@ public class TransitionBox : MonoBehaviour
 
     IEnumerator TransitionCoroutine()
     {
+        if(doorController != null)
+        {
+            doorController.ClosingState();
+        }
+        audioSource.Play();
         while (fadeCanvasGroup.alpha < 1f)
         {
             fadeCanvasGroup.alpha += Time.deltaTime / fadeTime;
             yield return null;
         }
-        audioSource.Play();
         while (afterFadeTimer < afterFadeTime)
         {
             afterFadeTimer += Time.deltaTime;

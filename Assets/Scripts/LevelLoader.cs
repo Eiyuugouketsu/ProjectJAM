@@ -14,15 +14,13 @@ public class LevelLoader : MonoBehaviour
     }
 
     public void LoadScene(int scene){
-        Debug.Log("Next scene index: " + scene);
-        //menuManager.PanelSwitch(loadingCanvas);
         StartCoroutine(LoadAsynchronously(scene));
 	}
 
     IEnumerator LoadAsynchronously(int sceneIndex)
     {
         yield return new WaitForSeconds(3);
-        AsyncOperation loading = SceneManager.LoadSceneAsync(sceneIndex);
+        AsyncOperation loading = SceneManager.LoadSceneAsync(1);
         loading.allowSceneActivation = false;
 
         // Play fade animation
@@ -31,6 +29,7 @@ public class LevelLoader : MonoBehaviour
             if (loading.progress >= 0.9f)
             {
                 //loadingCanvas.SetActive(false);
+                GameManager.Instance.levelManager.StartGame();
                 loading.allowSceneActivation = true;
             }
             yield return null;
@@ -45,14 +44,4 @@ public class LevelLoader : MonoBehaviour
         int nextSceneIndex = currentSceneIndex + 1;
         LoadScene(nextSceneIndex);
     }
-
-    // TODO: Remove this in the build.
-    private void Update() {
-        if (Input.GetKeyDown (KeyCode.P))
-        {
-            Debug.Log("Changing scene");
-            ClickPlay();
-        }
-    }
-
 }

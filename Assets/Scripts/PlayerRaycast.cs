@@ -12,7 +12,7 @@ public class PlayerRaycast : MonoBehaviour
     [SerializeField] float checkForObjectDistance;
     [SerializeField] float checkForGrabObjectDistance;
     [SerializeField] LayerMask layerMask;
-    ScalableObject currentTarget;
+    public ScalableObject currentTarget;
     // ScalableObject currentGrabbableTarget;
 
     private void Update()

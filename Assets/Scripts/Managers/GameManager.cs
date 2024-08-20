@@ -25,13 +25,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(UIManager.gameObject);
     }
 
-    public void Start() // for testings
+    public void StartGame()
     {
-        levelManager.StartGame(SceneManager.GetActiveScene().buildIndex+1);
+        levelManager.StartGame();
     }
-
-    // public void StartGame(levelId)
-    // {
-    //     levelManager.StartGame(levelId);
-    // }
 }

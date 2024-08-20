@@ -40,7 +40,7 @@ public class PlayerScalePower : MonoBehaviour
     [SerializeField] AudioSource shrinkSound;
 
     float currentScalePoints;
-    ScalableObject currObject;
+    ScalableObject currObject => PlayerThresholds.Instance.PlayerRaycast.currentTarget;
     private PlayerRaycast playerRaycast;
 
     ScaleState state = ScaleState.None;
@@ -112,16 +112,6 @@ public class PlayerScalePower : MonoBehaviour
     private void HandleMouseOverScalableObject(ScalableObject scalableObject)
     {
 
-        if (scalableObject != null)
-        {
-            currObject = scalableObject;
-            //Debug.Log("Mouse is over a scalable object: " + scalableObject.name);
-        }
-        else
-        {
-            currObject = null;
-            //Debug.Log("Mouse is not over any scalable object.");
-        }
     }
 
     public void OnGrowObject(InputValue value)

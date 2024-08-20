@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    int currentLevelId = 0;
-    public bool LevelCompleted;
-    public void StartGame(int levelId)
+    int currentLevelId = 1;
+    public bool LevelCompleted = false;
+    public void StartGame()
     {
-        StartCoroutine(Process(levelId));
+        StartCoroutine(Process());
     }
 
     public void ResetLevel()
@@ -39,10 +39,8 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(currentLevelId);
     }
-    IEnumerator Process(int levelId)
+    IEnumerator Process()
     {
-        currentLevelId = levelId;
-        LoadLevel(levelId);
         while(currentLevelId +1 < 10)
         {
             yield return new WaitUntil(() => LevelCompleted);
