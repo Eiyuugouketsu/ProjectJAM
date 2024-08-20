@@ -2660,42 +2660,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1561840125342798522, guid: 14d8bc2be5e1b284bab65bb5b91a0e29, type: 3}
   m_PrefabInstance: {fileID: 3961361861114323503}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &923891502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923891500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a5e9f33c861c74ca0f139c82c392b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minimumScale: 1
-  unscalable: 0
-  rb: {fileID: 923891505}
-  outlineManager: {fileID: 923891504}
-  audioSource: {fileID: 0}
-  collisionClips: []
-  freezedUntillTouched: 1
-  touchingObjects: []
-  isBeingHeld: 0
-  onObjectPickedUp:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 586147607}
-        m_TargetAssemblyTypeName: VOTrigger, Assembly-CSharp
-        m_MethodName: PlayAudioEvent
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &923891503
 MonoBehaviour:
   m_ObjectHideFlags: 0
