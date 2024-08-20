@@ -47,7 +47,7 @@ public class DoorController : MonoBehaviour
     {
         animator.SetBool("IsOpened",true);
     }
-    private void ClosingState()
+    public void ClosingState()
     {
         animator.SetBool("IsOpened",false);
     }

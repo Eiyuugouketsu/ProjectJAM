@@ -9,7 +9,7 @@ public class PlayerGrabAbility : MonoBehaviour
     public event Action<ScalableObject> OnObjectPickedUp;
     public event Action OnObjectDropped;
     private PlayerRaycast playerRaycast;
-    ScalableObject currObject;
+    ScalableObject currObject => PlayerThresholds.Instance.PlayerRaycast.currentTarget;
     ScalableObject grabbedObject;
     public bool isHoldingObject = false;
     [SerializeField] private Transform holdPos;
@@ -32,16 +32,6 @@ public class PlayerGrabAbility : MonoBehaviour
     private void HandleMouseOverGrabbableObject(ScalableObject grabbableObject)
     {
 
-        if (grabbableObject != null)
-        {
-            currObject = grabbableObject;
-            //Debug.Log("Mouse is over a scalable object: " + scalableObject.name);
-        }
-        else
-        {
-            currObject = null;
-            //Debug.Log("Mouse is not over any scalable object.");
-        }
     }
 
     public void OnPickUpDrop()
