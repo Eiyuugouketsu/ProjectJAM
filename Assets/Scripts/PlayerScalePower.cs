@@ -35,6 +35,10 @@ public class PlayerScalePower : MonoBehaviour
     [Tooltip("This is the amount of time represented by 1 on the scaleRateCurve")]
     [SerializeField] float scaleRateTime = 1f;
 
+    [SerializeField] AudioSource clickSound;
+    [SerializeField] AudioSource growSound;
+    [SerializeField] AudioSource shrinkSound;
+
     float currentScalePoints;
     ScalableObject currObject;
     private PlayerRaycast playerRaycast;
@@ -126,6 +130,15 @@ public class PlayerScalePower : MonoBehaviour
         ScaleState newState = value.isPressed ? ScaleState.Growing : ScaleState.None;
         if (newState != state)
         {
+            if (newState == ScaleState.Growing)
+            {
+                clickSound.Play();
+                growSound.Play();
+            } else
+            {
+                growSound.Stop();
+                shrinkSound.Stop();
+            }
             OnChangeScaleState?.Invoke(newState);
         }
         state = newState;
@@ -138,6 +151,15 @@ public class PlayerScalePower : MonoBehaviour
         ScaleState newState = value.isPressed ? ScaleState.Shrinking : ScaleState.None;
         if (newState != state)
         {
+            if (newState == ScaleState.Shrinking)
+            {
+                clickSound.Play();
+                shrinkSound.Play();
+            } else
+            {
+                growSound.Stop();
+                shrinkSound.Stop();
+            }
             OnChangeScaleState?.Invoke(newState);
         }
         state = newState;
