@@ -1411,6 +1411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 488631956}
   playOnStart: 1
+  interruptQueue: 0
 --- !u!1001 &511363678
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1668,6 +1669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 586147606}
   playOnStart: 0
+  interruptQueue: 1
 --- !u!1 &592195512
 GameObject:
   m_ObjectHideFlags: 0
@@ -4203,6 +4205,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioSource: {fileID: 1474858288}
   playOnStart: 0
+  interruptQueue: 0
 --- !u!1001 &1580617894
 PrefabInstance:
   m_ObjectHideFlags: 0
