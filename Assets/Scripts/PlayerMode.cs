@@ -31,7 +31,7 @@ public class PlayerMode : MonoBehaviour
 
     public void OnChangeMode()
     {
-        if (currentState == PlayerState.Grab)
+        if (currentState == PlayerState.Grab && PlayerThresholds.Instance.haveFlashlight)
         {
             if (playerGrabAbility.isHoldingObject) return;
             currentState = PlayerState.Scale;

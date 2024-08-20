@@ -458,7 +458,7 @@ GameObject:
   - component: {fileID: 270733612}
   - component: {fileID: 270733611}
   - component: {fileID: 270733610}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ceiling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -864,9 +864,9 @@ GameObject:
   - component: {fileID: 535993325}
   - component: {fileID: 535993324}
   - component: {fileID: 535993323}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (5)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -971,7 +971,7 @@ GameObject:
   - component: {fileID: 543899025}
   m_Layer: 0
   m_Name: Wall (8)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1261,9 +1261,9 @@ GameObject:
   - component: {fileID: 598249212}
   - component: {fileID: 598249211}
   - component: {fileID: 598249210}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (16)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1517,7 +1517,7 @@ GameObject:
   - component: {fileID: 757144409}
   m_Layer: 0
   m_Name: Wall (15)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1620,9 +1620,9 @@ GameObject:
   - component: {fileID: 767457854}
   - component: {fileID: 767457853}
   - component: {fileID: 767457852}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (17)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -1956,9 +1956,9 @@ GameObject:
   - component: {fileID: 986888756}
   - component: {fileID: 986888755}
   - component: {fileID: 986888754}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Wall (1)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -2249,7 +2249,7 @@ GameObject:
   - component: {fileID: 1219847252}
   - component: {fileID: 1219847251}
   - component: {fileID: 1219847250}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Ceiling (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2394,6 +2394,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5433027195670906346, guid: be7e0239ac4709b44a4db64f06d02ba1, type: 3}
+      propertyPath: doorController
+      value: 
+      objectReference: {fileID: 363779209}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2632,7 +2636,7 @@ GameObject:
   - component: {fileID: 1368968318}
   m_Layer: 0
   m_Name: Wall (3)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3262,7 +3266,7 @@ GameObject:
   - component: {fileID: 1535182795}
   m_Layer: 0
   m_Name: Wall (13)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3787,7 +3791,7 @@ GameObject:
   - component: {fileID: 2026115399}
   m_Layer: 0
   m_Name: Wall (2)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3892,7 +3896,7 @@ GameObject:
   - component: {fileID: 2046830315}
   m_Layer: 0
   m_Name: Wall (14)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -3997,7 +4001,7 @@ GameObject:
   - component: {fileID: 2070574256}
   m_Layer: 0
   m_Name: Wall (16)
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -4418,6 +4422,10 @@ PrefabInstance:
     - target: {fileID: 481049060846510057, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: scaleRateCurve.m_Curve.Array.data[1].tangentMode
       value: 34
+      objectReference: {fileID: 0}
+    - target: {fileID: 2128592765249450928, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
+      propertyPath: haveFlashlight
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8616685848737228372, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}
       propertyPath: m_Name

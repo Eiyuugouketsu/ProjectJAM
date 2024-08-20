@@ -10,6 +10,7 @@ public class ScalableObject : MonoBehaviour
     [SerializeField] OutlineManager outlineManager;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] collisionClips;
+    [SerializeField] bool freezedUntillTouched;
     float baseMass;
     float baseScale;
     public List<GameObject> touchingObjects = new List<GameObject>();
@@ -17,7 +18,6 @@ public class ScalableObject : MonoBehaviour
     bool touchingCeiling => touchingObjects.Any(obj => obj.gameObject.layer == LayerMask.NameToLayer("Ceiling"));
     bool touchingPlayerForceField => touchingObjects.Any(obj => obj.gameObject.layer == LayerMask.NameToLayer("PlayerForceField"));
     float touchingWalls => touchingObjects.Count(obj => obj.gameObject.layer == LayerMask.NameToLayer("Wall"));
-
     float destinationScale;
     Vector3 playerPosition;
 
@@ -30,6 +30,10 @@ public class ScalableObject : MonoBehaviour
         baseScale = transform.localScale.x;
         destinationScale = transform.localScale.x;
         baseMass = rb.mass;
+        if(freezedUntillTouched)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
 
     private void OnCollisionEnter(Collision other) 
@@ -67,6 +71,7 @@ public class ScalableObject : MonoBehaviour
 
     public void Grow(float growAmount, Vector3 playerPosition)
     {
+        rb.constraints = RigidbodyConstraints.None;
         this.playerPosition = playerPosition;
         if (CheckIfCanGrow()) destinationScale = destinationScale + growAmount;
 
@@ -74,6 +79,7 @@ public class ScalableObject : MonoBehaviour
 
     public void Shrink(float shrinkAmount, Vector3 playerPosition)
     {
+        rb.constraints = RigidbodyConstraints.None;
         this.playerPosition = playerPosition;
         if (CheckIfCanShrink()) destinationScale = Mathf.Max(minimumScale, destinationScale - shrinkAmount);
     }
@@ -103,8 +109,9 @@ public class ScalableObject : MonoBehaviour
         else if (transform.localScale.x < destinationScale) outlineManager.ChangeOutlineColor(ScaleState.Growing);
     }
 
-    public void SetIsKinematic(bool value)
+    virtual public void SetIsKinematic(bool value)
     {
+        rb.constraints = RigidbodyConstraints.None;
         rb.isKinematic = value;
     }
 
