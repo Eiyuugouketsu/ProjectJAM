@@ -142,6 +142,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -4683669308469848369, guid: 1026b69889fad6f4ab883197b504ff4c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 41d8a211e6a5a2f458f4dc3e3875e0c7, type: 2}
     - target: {fileID: 919132149155446097, guid: 1026b69889fad6f4ab883197b504ff4c, type: 3}
       propertyPath: m_Name
       value: ArtDecoTable1

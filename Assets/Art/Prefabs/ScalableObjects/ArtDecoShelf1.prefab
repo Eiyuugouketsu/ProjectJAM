@@ -219,6 +219,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7918335002988649766, guid: 4c5422ac4f815d94489510c7fe96cc0a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f78de93f98568b45a1b783fa55fe1b1, type: 2}
     - target: {fileID: 919132149155446097, guid: 4c5422ac4f815d94489510c7fe96cc0a, type: 3}
       propertyPath: m_Name
       value: ArtDecoShelf1
