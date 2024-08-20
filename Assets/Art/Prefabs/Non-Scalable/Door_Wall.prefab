@@ -10,6 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8218077423793889762}
   - component: {fileID: 181509161876424737}
+  - component: {fileID: 8049184296026184316}
+  - component: {fileID: 3637135490010343019}
+  - component: {fileID: 8866776321436916738}
   m_Layer: 8
   m_Name: Door_Wall
   m_TagString: Wall
@@ -52,8 +55,71 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.2726994, y: 1, z: 1}
-  m_Center: {x: -4.488886, y: 0, z: 0}
+  m_Size: {x: 6.2726994, y: 15.248796, z: 1}
+  m_Center: {x: -4.488886, y: 2.6010246, z: 0}
+--- !u!65 &8049184296026184316
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645547557861441672}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.6, y: 7, z: 1}
+  m_Center: {x: 0, y: 6.7, z: 0}
+--- !u!65 &3637135490010343019
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645547557861441672}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.2726994, y: 15.248796, z: 1}
+  m_Center: {x: 4.4, y: 2.6010246, z: 0}
+--- !u!65 &8866776321436916738
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3645547557861441672}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.6, y: 7, z: 1}
+  m_Center: {x: 0, y: -3.65, z: 0}
 --- !u!1001 &6768348790555190890
 PrefabInstance:
   m_ObjectHideFlags: 0
