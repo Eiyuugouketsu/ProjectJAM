@@ -74,7 +74,7 @@ public class PressurePlate : MonoBehaviour
     }
 
     void CloseDoor()
-    {
+    {   
         doorController.UpdateDoorState(DoorState.closed);
     }
 }
