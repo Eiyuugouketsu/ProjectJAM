@@ -70,22 +70,15 @@ public class PlayerGrabAbility : MonoBehaviour
     {
         isHoldingObject = true;
         grabbedObject = currObject;
-
-        grabbedObject.SetIsKinematic(true);
-        grabbedObject.transform.position = holdPos.position;
-        grabbedObject.transform.SetParent(holdPos);
+        grabbedObject.ObjectPickedUp(holdPos);
         OnObjectPickedUp?.Invoke(grabbedObject);
     }
 
     private void DropObject()
     {
         isHoldingObject = false;
-
-        grabbedObject.SetIsKinematic(false);
-
-        grabbedObject.transform.SetParent(null);
+        grabbedObject.ObjectDropped();
         grabbedObject = null;
-
         OnObjectDropped?.Invoke();
     }
     private void ThrowObject()

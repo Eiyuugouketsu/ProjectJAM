@@ -44,7 +44,7 @@ public class PressurePlate : MonoBehaviour
     }
     void Update()
     {
-        float sum = scalableObjects.Where(obj => !obj.GetIsKinematic() && ((Mathf.Abs(obj.transform.position.x) < Mathf.Abs(transform.position.x)+1) && (Mathf.Abs(obj.transform.position.x) > Mathf.Abs(transform.position.x)-1) && (Mathf.Abs(obj.transform.position.z) < Mathf.Abs(transform.position.z)+1) && (Mathf.Abs(obj.transform.position.z) > Mathf.Abs(transform.position.z)-1))).Sum(obj => obj.GetMass());
+        float sum = scalableObjects.Where(obj => !obj.isBeingHeld && ((Mathf.Abs(obj.transform.position.x) < Mathf.Abs(transform.position.x)+1) && (Mathf.Abs(obj.transform.position.x) > Mathf.Abs(transform.position.x)-1) && (Mathf.Abs(obj.transform.position.z) < Mathf.Abs(transform.position.z)+1) && (Mathf.Abs(obj.transform.position.z) > Mathf.Abs(transform.position.z)-1))).Sum(obj => obj.GetMass());
         if(sum>=massNeeded && sinkTimer < timeToSink)
         {
             if (!audioPlaying)
