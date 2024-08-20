@@ -57,7 +57,7 @@ public class ScalableObject : MonoBehaviour
         {
             audioSource.clip = collisionClips[Random.Range(0, collisionClips.Length)];
             audioSource.Play();
-            collisionSoundTimeout = Random.Range(0f, 1f);
+            collisionSoundTimeout = Random.Range(1.5f, 2f);
         }
     }
 
