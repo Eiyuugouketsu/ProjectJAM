@@ -27,10 +27,10 @@ public class LevelManager : MonoBehaviour
         {
             ResetLevel();
         }
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            LevelCompleted = true;
-        }
+        // if(Input.GetKeyDown(KeyCode.O))
+        // {
+            // LevelCompleted = true;
+        // }
     }
 
     void LoadLevel(int levelId)
