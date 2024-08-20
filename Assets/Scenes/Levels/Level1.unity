@@ -2096,11 +2096,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3193050195103673078, guid: ccaa0ef117f13bf468143603594ea9f2, type: 3}
       propertyPath: m_StaticEditorFlags
-      value: 126
-      objectReference: {fileID: 0}
-    - target: {fileID: 3564915178979958980, guid: ccaa0ef117f13bf468143603594ea9f2, type: 3}
-      propertyPath: m_CastShadows
-      value: 0
+      value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 8475701314292994720, guid: ccaa0ef117f13bf468143603594ea9f2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2718,21 +2714,6 @@ MonoBehaviour:
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
---- !u!114 &923891504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923891500}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19d5b9f66f9c6824e89e3d0c0b0da6a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outline: {fileID: 923891503}
-  growColor: {r: 0.8862745, g: 0.12156863, b: 0.14509805, a: 1}
-  shrinkColor: {r: 0.3137255, g: 0.654902, b: 0.77254903, a: 1}
 --- !u!54 &923891505
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2760,27 +2741,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &923891506
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 923891500}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.8279187, y: 0.29316986, z: 0.2219964}
-  m_Center: {x: 0.0069781095, y: -0.0003772378, z: 0.00018528104}
 --- !u!1001 &938183471
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5328,19 +5288,10 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1561840125342798522, guid: 14d8bc2be5e1b284bab65bb5b91a0e29, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 923891502}
-    - targetCorrespondingSourceObject: {fileID: 1561840125342798522, guid: 14d8bc2be5e1b284bab65bb5b91a0e29, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 923891505}
     - targetCorrespondingSourceObject: {fileID: 1561840125342798522, guid: 14d8bc2be5e1b284bab65bb5b91a0e29, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 923891504}
-    - targetCorrespondingSourceObject: {fileID: 1561840125342798522, guid: 14d8bc2be5e1b284bab65bb5b91a0e29, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 923891503}
-    - targetCorrespondingSourceObject: {fileID: 1561840125342798522, guid: 14d8bc2be5e1b284bab65bb5b91a0e29, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 923891506}
   m_SourcePrefab: {fileID: 100100000, guid: 14d8bc2be5e1b284bab65bb5b91a0e29, type: 3}
 --- !u!1001 &4918483679141543587
 PrefabInstance:

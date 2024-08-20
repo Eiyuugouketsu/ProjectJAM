@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Frame & painting
       objectReference: {fileID: 0}
+    - target: {fileID: 5426261550808758293, guid: ea5db83914130b34dac4f575d3bcd143, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 913b3df43c5492544a0c0761bbcccfa2, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
