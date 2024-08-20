@@ -6,6 +6,8 @@ using UnityEngine;
 public class ScalableObject : MonoBehaviour
 {
     [SerializeField] float minimumScale;
+    [Tooltip("Turn this to on to make this object able to be picked up and moved, but not scaled with the flashlight")]
+    [SerializeField] bool unscalable = false;
     [SerializeField] protected Rigidbody rb;
     [SerializeField] OutlineManager outlineManager;
     [SerializeField] AudioSource audioSource;
@@ -59,13 +61,13 @@ public class ScalableObject : MonoBehaviour
 
     public bool CheckIfCanGrow()
     {
-        if (!interactable) return false;
+        if (!interactable || unscalable) return false;
         return (!(touchingWalls >1) && !touchingCeiling && !touchingPlayerForceField) && (!scalableObjects.Any(obj => obj.touchingWalls > 0 || obj.touchingCeiling)  || scalableObjects.Count == 0) && !PlayerThresholds.Instance.isCeilingAbove;
     }
 
     public bool CheckIfCanShrink()
     {
-        if (!interactable) return false;
+        if (!interactable || unscalable) return false;
         return transform.localScale.x > minimumScale;
     }
 
