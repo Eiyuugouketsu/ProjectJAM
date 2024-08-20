@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FlashLightPodium : ScalableObject
 {
-    public override void SetIsKinematic(bool value)
+    public override void ObjectPickedUp(Transform holdPos)
     {
         PlayerThresholds.Instance.haveFlashlight = true;
         PlayerThresholds.Instance.PlayerGrabAbility.isHoldingObject = false;
