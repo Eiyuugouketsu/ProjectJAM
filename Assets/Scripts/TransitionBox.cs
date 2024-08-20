@@ -4,25 +4,16 @@ using UnityEngine;
 
 public class TransitionBox : MonoBehaviour
 {
-    [SerializeField] Trigger closeEnterDoorTrigger;
-    [SerializeField] Trigger openExitDoorTrigger;
-    [SerializeField] Trigger exitTransitionBoxTrigger;
-    [SerializeField] public Transform levelLoadPoint;
+    [SerializeField] Trigger transitionTrigger;
     void OnEnable()
     {
-        closeEnterDoorTrigger.OnEventTriggerEnter += CloseDoor;
-        openExitDoorTrigger.OnEventTriggerEnter += OpenDoor;
+        transitionTrigger.OnEventTriggerEnter += TransitionToNextScene;
     }
 
-    void CloseDoor(Collider other)
+    void TransitionToNextScene(Collider other)
     {
         GameManager.Instance.levelManager.LevelCompleted = true;
-        Destroy(closeEnterDoorTrigger);
-    }
-
-    void OpenDoor(Collider other)
-    {
-
+        Destroy(transitionTrigger.gameObject);
     }
 
     public void DisableAndDestroy()
