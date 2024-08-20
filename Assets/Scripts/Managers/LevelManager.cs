@@ -37,16 +37,19 @@ public class LevelManager : MonoBehaviour
 
     void LoadNextLevel()
     {
+        VOTrigger.audioQueue.Clear();
         SceneManager.LoadScene(currentLevelId);
     }
     IEnumerator Process()
     {
-        while(currentLevelId +1 < 10)
+        while(currentLevelId < 3)
         {
             yield return new WaitUntil(() => LevelCompleted);
             LevelCompleted = false;
             currentLevelId ++;
             LoadNextLevel();
+            Debug.Log("test1");
         }
+        Debug.Log("test");
     }
 }

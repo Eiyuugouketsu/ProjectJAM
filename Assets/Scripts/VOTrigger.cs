@@ -56,11 +56,11 @@ public class VOTrigger : MonoBehaviour
         m_audioSource.Play();
         Debug.Log("playing audio " + m_audioSource.clip.name);
         played = true;
-        
+
         yield return new WaitForSeconds(m_audioSource.clip.length);
         audioQueue.Remove(m_audioSource);
         if(audioQueue.Count > 0)
             StartCoroutine(PlayAudio(audioQueue[0], false));
     }
-    
+
 }
