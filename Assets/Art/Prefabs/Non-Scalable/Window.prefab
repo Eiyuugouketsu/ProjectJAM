@@ -80,6 +80,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7162422764800997415, guid: 0399bbc1b3435b1478b1fdd6cb927e48, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7310e4d331fb7434cbf13c5f27c29abf, type: 2}
     - target: {fileID: -5887876694497934191, guid: 0399bbc1b3435b1478b1fdd6cb927e48, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -88,6 +92,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -5318758158630819628, guid: 0399bbc1b3435b1478b1fdd6cb927e48, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6c17c37b5b705ee49850273e4444314a, type: 2}
+    - target: {fileID: -4897732323685117858, guid: 0399bbc1b3435b1478b1fdd6cb927e48, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0b13a5517096be9419af7433d395dcd7, type: 2}
     - target: {fileID: -3111565609762313623, guid: 0399bbc1b3435b1478b1fdd6cb927e48, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -96,6 +108,14 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: -3062010263754486815, guid: 0399bbc1b3435b1478b1fdd6cb927e48, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7310e4d331fb7434cbf13c5f27c29abf, type: 2}
+    - target: {fileID: -1700523413281072150, guid: 0399bbc1b3435b1478b1fdd6cb927e48, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7310e4d331fb7434cbf13c5f27c29abf, type: 2}
     - target: {fileID: -1312437912502284526, guid: 0399bbc1b3435b1478b1fdd6cb927e48, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -140,6 +160,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 6445169102183090617, guid: 0399bbc1b3435b1478b1fdd6cb927e48, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ecec4736e839cf42aa12b5bb440c4b9, type: 2}
     - target: {fileID: 7869873546869171050, guid: 0399bbc1b3435b1478b1fdd6cb927e48, type: 3}
       propertyPath: m_Layer
       value: 8
