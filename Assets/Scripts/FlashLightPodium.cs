@@ -8,6 +8,7 @@ public class FlashLightPodium : ScalableObject
     {
         PlayerThresholds.Instance.haveFlashlight = true;
         PlayerThresholds.Instance.PlayerGrabAbility.isHoldingObject = false;
+        PlayerThresholds.Instance.PlayerMode.OnChangeMode();
         Destroy(gameObject);
     }
 }
