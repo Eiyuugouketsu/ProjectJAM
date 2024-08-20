@@ -9,10 +9,23 @@ using UnityEngine.Assertions.Must;
 public class PressurePlate : MonoBehaviour
 {
     [SerializeField] float massNeeded;
-    public event Action OnPressurePlateActivate;
+    [SerializeField] float timeToSink;
+    [SerializeField] Vector3 sunkPosition;
+    [SerializeField] DoorController doorController;
+    [SerializeField] AudioSource audioSource;
     List<ScalableObject> scalableObjects = new List<ScalableObject>();
+    Vector3 startingPosition;
     float yMax = 2f;
     float targetY;
+
+    float sinkTimer = 0f;
+    bool audioPlaying = false;
+
+    void Awake()
+    {
+        startingPosition = transform.localPosition;
+    }
+
     void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.layer == LayerMask.NameToLayer("ScalableObject"))
@@ -31,13 +44,37 @@ public class PressurePlate : MonoBehaviour
     }
     void Update()
     {
-        float sum = scalableObjects.Where(obj => !obj.GetIsKinematic() && ((Mathf.Abs(obj.transform.position.x) < Mathf.Abs(transform.position.x)+1) && (Mathf.Abs(obj.transform.position.x) > Mathf.Abs(transform.position.x)-1) && (Mathf.Abs(obj.transform.position.z) < Mathf.Abs(transform.position.z)+1) && (Mathf.Abs(obj.transform.position.z) > Mathf.Abs(transform.position.z)-1))).Sum(obj => obj.GetMass());
-        if(sum>massNeeded)
+        float sum = scalableObjects.Where(obj => !obj.isBeingHeld && ((Mathf.Abs(obj.transform.position.x) < Mathf.Abs(transform.position.x)+1) && (Mathf.Abs(obj.transform.position.x) > Mathf.Abs(transform.position.x)-1) && (Mathf.Abs(obj.transform.position.z) < Mathf.Abs(transform.position.z)+1) && (Mathf.Abs(obj.transform.position.z) > Mathf.Abs(transform.position.z)-1))).Sum(obj => obj.GetMass());
+        if(sum>=massNeeded && sinkTimer < timeToSink)
         {
-            OnPressurePlateActivate?.Invoke();
+            if (!audioPlaying)
+            {
+                audioSource.Play();
+                audioPlaying = true;
+            }
+            sinkTimer += Time.deltaTime;
+            if (sinkTimer >= timeToSink)
+            {
+                sinkTimer = timeToSink;
+                OpenDoor();
+            }
+        } else if (sum < massNeeded && sinkTimer > 0f)
+        {
+            audioPlaying = false;
+            sinkTimer -= Time.deltaTime;
+            CloseDoor();
+            if (sinkTimer < 0f) sinkTimer = 0f;
         }
-        targetY = Mathf.Lerp(yMax,0,sum/massNeeded);
-        Vector3 newPos = new Vector3(transform.localPosition.x, Mathf.Lerp(transform.localPosition.y,targetY,0.2f), transform.localPosition.z);
-        transform.localPosition = newPos;
+        transform.localPosition = Vector3.Lerp(startingPosition, sunkPosition, sinkTimer / timeToSink);
+    }
+
+    void OpenDoor()
+    {
+        doorController.UpdateDoorState(DoorState.open);
+    }
+
+    void CloseDoor()
+    {
+        doorController.UpdateDoorState(DoorState.closed);
     }
 }

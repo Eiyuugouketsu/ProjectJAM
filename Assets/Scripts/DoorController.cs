@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum DoorState{
+    open,
+    closed,
+    damaged,
+}
 public class DoorController : MonoBehaviour
 {
-    public enum DoorState{
-        open,
-        closed,
-        damaged,
-    }
 
     private DoorState currDoorState;
     public DoorState CurrDoorState

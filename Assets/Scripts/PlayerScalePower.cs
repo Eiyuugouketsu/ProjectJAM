@@ -13,7 +13,13 @@ public enum ScaleState {
 public class PlayerScalePower : MonoBehaviour
 {
     public event Action<float> OnUpdateScalePoints;
+    public event Action<ScaleState> OnChangeScaleState;
     [SerializeField] PlayerMode playerMode;
+    [SerializeField] Material[] flashlightBeamMaterials;
+    [SerializeField] Light flashlightLight;
+    [SerializeField] Color baseColor;
+    [SerializeField] Color growColor;
+    [SerializeField] Color shrinkColor;
     [SerializeField] float startingScalePoints = 50f;
     [SerializeField] float maxScalePoints = 100f;
 
@@ -28,6 +34,10 @@ public class PlayerScalePower : MonoBehaviour
 
     [Tooltip("This is the amount of time represented by 1 on the scaleRateCurve")]
     [SerializeField] float scaleRateTime = 1f;
+
+    [SerializeField] AudioSource clickSound;
+    [SerializeField] AudioSource growSound;
+    [SerializeField] AudioSource shrinkSound;
 
     float currentScalePoints;
     ScalableObject currObject;
@@ -57,7 +67,12 @@ public class PlayerScalePower : MonoBehaviour
     {
         if (playerMode.GetPlayerState() == PlayerState.Grab)
         {
+            if (state != ScaleState.None)
+            {
+                OnChangeScaleState(ScaleState.None);
+            }
             state = ScaleState.None;
+            HandleFlashlightColor();
             elapsedTimeScaling = 0f;
             return;
         }
@@ -71,23 +86,23 @@ public class PlayerScalePower : MonoBehaviour
 
         if (state == ScaleState.Growing)
         {
-            if (currentScalePoints >= maxScalePoints || !currObject.CheckIfCanGrow()) return;
+            if (currentScalePoints <= 0f || !currObject.CheckIfCanGrow()) return;
             float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime * curveFactor, maxScalePoints - currentScalePoints);
             currObject.Grow(pointsSpent * unitsScaledPerScalePoint, transform.position);
             // Debug.Log($"pointsSpend: {pointsSpent}, deltaTime: {Time.deltaTime}, max: {maxScalePoints - currentScalePoints}, growthAmount: {pointsSpent * unitsScaledPerScalePoint}");
-            currentScalePoints += pointsSpent;
+            currentScalePoints -= pointsSpent;
             currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
             OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
             elapsedTimeScaling += Time.deltaTime;
         } else if (state == ScaleState.Shrinking)
         {
-            if (currentScalePoints <= 0f) return;
+            if (currentScalePoints >= maxScalePoints) return;
             // This is the most points that can be spent on this object before it would reduce it below it's minimum scale
             float mostPointsSpendable = (currObject.GetCurrentScale() - currObject.GetMinimumScale()) / unitsScaledPerScalePoint;
             float pointsSpent = Mathf.Min(scalePointsPerSecond * Time.deltaTime * curveFactor, currentScalePoints, mostPointsSpendable);
             currObject.Shrink(pointsSpent * unitsScaledPerScalePoint, transform.position);
             // Debug.Log($"pointsSpend: {pointsSpent}, shrinkAmount: {pointsSpent * unitsScaledPerScalePoint}");
-            currentScalePoints -= pointsSpent;
+            currentScalePoints += pointsSpent;
             currentScalePoints = Mathf.Clamp(currentScalePoints, 0f, maxScalePoints);
             OnUpdateScalePoints?.Invoke(currentScalePoints / maxScalePoints);
             elapsedTimeScaling += Time.deltaTime;
@@ -112,13 +127,71 @@ public class PlayerScalePower : MonoBehaviour
     public void OnGrowObject(InputValue value)
     {
         if (playerMode.GetPlayerState() == PlayerState.Grab || state == ScaleState.Shrinking) return;
-        state = value.isPressed ? ScaleState.Growing : ScaleState.None;
+        ScaleState newState = value.isPressed ? ScaleState.Growing : ScaleState.None;
+        if (newState != state)
+        {
+            if (newState == ScaleState.Growing)
+            {
+                clickSound.Play();
+                growSound.Play();
+            } else
+            {
+                growSound.Stop();
+                shrinkSound.Stop();
+            }
+            OnChangeScaleState?.Invoke(newState);
+        }
+        state = newState;
+        HandleFlashlightColor();
     }
 
     public void OnShrinkObject(InputValue value)
     {
         if (playerMode.GetPlayerState() == PlayerState.Grab || state == ScaleState.Growing) return;
-        state = value.isPressed ? ScaleState.Shrinking : ScaleState.None;
+        ScaleState newState = value.isPressed ? ScaleState.Shrinking : ScaleState.None;
+        if (newState != state)
+        {
+            if (newState == ScaleState.Shrinking)
+            {
+                clickSound.Play();
+                shrinkSound.Play();
+            } else
+            {
+                growSound.Stop();
+                shrinkSound.Stop();
+            }
+            OnChangeScaleState?.Invoke(newState);
+        }
+        state = newState;
+        HandleFlashlightColor();
+    }
+
+    void HandleFlashlightColor()
+    {
+        Color color = Color.white;
+        switch(state)
+        {
+            case ScaleState.None:
+                color = baseColor;
+                break;
+            case ScaleState.Growing:
+                color = growColor;
+                break;
+            case ScaleState.Shrinking:
+                color = shrinkColor;
+                break;
+        }
+
+        foreach(Material material in flashlightBeamMaterials)
+        {
+            material.SetVector("_Beam_Color", color);
+        }
+        flashlightLight.color = color;
+    }
+
+    public ScaleState GetState()
+    {
+        return state;
     }
 
     public float GetCurrentScalePoints()

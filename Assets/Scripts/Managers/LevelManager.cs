@@ -2,18 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] GameObject playerPrefab;
-    [SerializeField] List<Level> Levels = new List<Level>();
     int currentLevelId = 0;
-    [SerializeField] TransitionBox transitionBoxPrefab;
-    TransitionBox transitionBox;
-    Level activeLevel;
     public bool LevelCompleted;
-    public bool TransitionBoxExited;
-
     public void StartGame(int levelId)
     {
         StartCoroutine(Process(levelId));
@@ -21,55 +15,40 @@ public class LevelManager : MonoBehaviour
 
     public void ResetLevel()
     {
-        Destroy(PlayerThresholds.Instance.gameObject);
-        Destroy(activeLevel.gameObject);
-        Destroy(transitionBox.gameObject);
-        StopAllCoroutines();
-        StartGame(currentLevelId);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     } 
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P)) // for testings
+        if(Input.GetKeyDown(KeyCode.P))
         {
             ResetLevel();
         }
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            LevelCompleted = true;
+        }
     }
 
-    IEnumerator LoadLevel(int levelId)
+    void LoadLevel(int levelId)
     {
-        Level level = Instantiate(Levels[levelId]);
-        yield return new WaitUntil(() => level.isActiveAndEnabled);
-        activeLevel = level;
-        transitionBox = Instantiate(transitionBoxPrefab,level.TransitionBoxSpawn.transform.position, new Quaternion());
-        yield return new WaitUntil(() => transitionBox.isActiveAndEnabled);
-        var Player = Instantiate(playerPrefab, level.PlayerSpawnPoint.position, new Quaternion());
-        PlayerThresholds.Instance.SubscribeToInnerEvents();
+        SceneManager.LoadScene(levelId);
     }
 
-    IEnumerator LoadNextLevel()
+    void LoadNextLevel()
     {
-        Level level = Instantiate(Levels[currentLevelId],transitionBox.levelLoadPoint.position,new Quaternion());
-        yield return new WaitUntil(() => level.isActiveAndEnabled);
-        activeLevel = level;
+        SceneManager.LoadScene(currentLevelId);
     }
     IEnumerator Process(int levelId)
     {
         currentLevelId = levelId;
-        yield return LoadLevel(levelId);
-        GameManager.Instance.playerCamera.Follow = PlayerThresholds.Instance.Cam;
-        GameManager.Instance.UIManager.PlayerSpawn();
-        while(currentLevelId +1 < Levels.Count)
+        LoadLevel(levelId);
+        while(currentLevelId +1 < 10)
         {
             yield return new WaitUntil(() => LevelCompleted);
             LevelCompleted = false;
             currentLevelId ++;
-            activeLevel.DisableAndDestroy();
-            yield return LoadNextLevel();
-            yield return new WaitUntil(() => TransitionBoxExited);
-            transitionBox.DisableAndDestroy();
-            TransitionBoxExited = false;
-            transitionBox = Instantiate(transitionBoxPrefab,activeLevel.TransitionBoxSpawn.transform.position,new Quaternion());
+            LoadNextLevel();
         }
     }
 }

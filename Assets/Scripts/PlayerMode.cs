@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,7 +12,7 @@ public enum PlayerState
 
 public class PlayerMode : MonoBehaviour
 {
-
+    public event Action<PlayerState> OnChangePlayerState;
     public PlayerState currentState = PlayerState.Grab;
     private PlayerScalePower playerScalePower;
     private PlayerGrabAbility playerGrabAbility;
@@ -30,14 +31,17 @@ public class PlayerMode : MonoBehaviour
 
     public void OnChangeMode()
     {
-        if (currentState == PlayerState.Grab)
+        if (currentState == PlayerState.Grab && PlayerThresholds.Instance.haveFlashlight)
         {
+            if (playerGrabAbility.isHoldingObject) return;
             currentState = PlayerState.Scale;
+            OnChangePlayerState?.Invoke(currentState);
             Debug.Log("Switched to Scale State");
         }
         else if (currentState == PlayerState.Scale)
         {
             currentState = PlayerState.Grab;
+            OnChangePlayerState?.Invoke(currentState);
             Debug.Log("Switched to Grab State");
         }
         UpdateState();
