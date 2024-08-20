@@ -15,6 +15,11 @@ public class PlayerScalePower : MonoBehaviour
     public event Action<float> OnUpdateScalePoints;
     public event Action<ScaleState> OnChangeScaleState;
     [SerializeField] PlayerMode playerMode;
+    [SerializeField] Material[] flashlightBeamMaterials;
+    [SerializeField] Light flashlightLight;
+    [SerializeField] Color baseColor;
+    [SerializeField] Color growColor;
+    [SerializeField] Color shrinkColor;
     [SerializeField] float startingScalePoints = 50f;
     [SerializeField] float maxScalePoints = 100f;
 
@@ -63,6 +68,7 @@ public class PlayerScalePower : MonoBehaviour
                 OnChangeScaleState(ScaleState.None);
             }
             state = ScaleState.None;
+            HandleFlashlightColor();
             elapsedTimeScaling = 0f;
             return;
         }
@@ -123,6 +129,7 @@ public class PlayerScalePower : MonoBehaviour
             OnChangeScaleState?.Invoke(newState);
         }
         state = newState;
+        HandleFlashlightColor();
     }
 
     public void OnShrinkObject(InputValue value)
@@ -134,6 +141,30 @@ public class PlayerScalePower : MonoBehaviour
             OnChangeScaleState?.Invoke(newState);
         }
         state = newState;
+        HandleFlashlightColor();
+    }
+
+    void HandleFlashlightColor()
+    {
+        Color color = Color.white;
+        switch(state)
+        {
+            case ScaleState.None:
+                color = baseColor;
+                break;
+            case ScaleState.Growing:
+                color = growColor;
+                break;
+            case ScaleState.Shrinking:
+                color = shrinkColor;
+                break;
+        }
+
+        foreach(Material material in flashlightBeamMaterials)
+        {
+            material.SetVector("_Beam_Color", color);
+        }
+        flashlightLight.color = color;
     }
 
     public ScaleState GetState()
