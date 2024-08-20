@@ -20,11 +20,14 @@ public class ReticleUI : MonoBehaviour
     PlayerGrabAbility playerGrabAbility;
     PlayerScalePower playerScalePower;
     [SerializeField] Image reticleImage;
+    [SerializeField] Image clickReticleImage;
     
     [SerializeField] Sprite defaultSprite;
+    [SerializeField] float defaultSpriteScale;
     [SerializeField] Sprite leftClickSprite;
     [SerializeField] Sprite rightClickSprite;
     [SerializeField] Sprite blockedSprite;
+    [SerializeField] float clickSpriteScale;
 
 // TODO: Move these to a singleton or global variable container
     [SerializeField] float pushThreshold;
@@ -57,14 +60,14 @@ public class ReticleUI : MonoBehaviour
         bothClickTimer += Time.deltaTime;
         if (bothClickTimer >= bothClickAlternationTime)
         {
-            reticleImage.sprite = reticleImage.sprite == leftClickSprite ? rightClickSprite : leftClickSprite;
+            clickReticleImage.sprite = clickReticleImage.sprite == leftClickSprite ? rightClickSprite : leftClickSprite;
             bothClickTimer = 0f;
         }
     }
 
     private void SetBothClickState()
     {
-        reticleImage.sprite = leftClickSprite;
+        clickReticleImage.sprite = leftClickSprite;
         bothClickTimer = 0f;
     }
 
@@ -77,17 +80,27 @@ public class ReticleUI : MonoBehaviour
         switch (newState)
         {
             case ReticleState.Both:
+                reticleImage.enabled = false;
+                clickReticleImage.enabled = true;
                 break;
             case ReticleState.Left:
-                reticleImage.sprite = leftClickSprite;
+                reticleImage.enabled = false;
+                clickReticleImage.enabled = true;
+                clickReticleImage.sprite = leftClickSprite;
                 break;
             case ReticleState.Right:
-                reticleImage.sprite = rightClickSprite;
+                reticleImage.enabled = false;
+                clickReticleImage.enabled = true;
+                clickReticleImage.sprite = rightClickSprite;
                 break;
             case ReticleState.Blocked:
-                reticleImage.sprite = blockedSprite;
+                reticleImage.enabled = false;
+                clickReticleImage.enabled = true;
+                clickReticleImage.sprite = blockedSprite;
                 break;
             default:
+                reticleImage.enabled = true;
+                clickReticleImage.enabled = false;
                 reticleImage.sprite = defaultSprite;
                 break;
         }
