@@ -43,7 +43,7 @@ public class ScalableObject : MonoBehaviour
     private void OnCollisionEnter(Collision other) 
     {
         touchingObjects.Add(other.gameObject);
-        PlayCollisionSound();
+        if(!other.transform.CompareTag("Player")) PlayCollisionSound();
     }
 
     private void OnCollisionExit(Collision other) 
@@ -91,7 +91,11 @@ public class ScalableObject : MonoBehaviour
     void Update()
     {
         if (collisionSoundTimeout > 0) collisionSoundTimeout -= Time.deltaTime;
-        if(isBeingHeld) rb.velocity = (followGrabPos.position - transform.position)*10;
+        if(isBeingHeld) 
+        {
+            rb.velocity = (followGrabPos.position - transform.position)*10;
+            rb.rotation = followGrabPos.rotation;
+        }
     }
 
     private void FixedUpdate() 
