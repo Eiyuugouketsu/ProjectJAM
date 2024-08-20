@@ -6,8 +6,13 @@ using UnityEngine;
 public class ScalableObject : MonoBehaviour
 {
     [SerializeField] float minimumScale;
+    [Tooltip("Turn this to on to make this object able to be picked up and moved, but not scaled with the flashlight")]
+    [SerializeField] bool unscalable = false;
     [SerializeField] protected Rigidbody rb;
     [SerializeField] OutlineManager outlineManager;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip[] collisionClips;
+    [SerializeField] bool freezedUntillTouched;
     float baseMass;
     float baseScale;
     public List<GameObject> touchingObjects = new List<GameObject>();
@@ -15,22 +20,30 @@ public class ScalableObject : MonoBehaviour
     bool touchingCeiling => touchingObjects.Any(obj => obj.gameObject.layer == LayerMask.NameToLayer("Ceiling"));
     bool touchingPlayerForceField => touchingObjects.Any(obj => obj.gameObject.layer == LayerMask.NameToLayer("PlayerForceField"));
     float touchingWalls => touchingObjects.Count(obj => obj.gameObject.layer == LayerMask.NameToLayer("Wall"));
-
     float destinationScale;
     Vector3 playerPosition;
+    Transform followGrabPos;
+    public bool isBeingHeld;
 
     bool interactable = true;
+
+    float collisionSoundTimeout = 1f;
 
     private void Awake()
     {
         baseScale = transform.localScale.x;
         destinationScale = transform.localScale.x;
         baseMass = rb.mass;
+        if(freezedUntillTouched)
+        {
+            rb.constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
 
     private void OnCollisionEnter(Collision other) 
     {
         touchingObjects.Add(other.gameObject);
+        PlayCollisionSound();
     }
 
     private void OnCollisionExit(Collision other) 
@@ -38,20 +51,31 @@ public class ScalableObject : MonoBehaviour
         touchingObjects.Remove(other.transform.gameObject);
     }
 
+    void PlayCollisionSound()
+    {
+        if (collisionSoundTimeout <= 0f)
+        {
+            audioSource.clip = collisionClips[Random.Range(0, collisionClips.Length)];
+            audioSource.Play();
+            collisionSoundTimeout = Random.Range(0f, 1f);
+        }
+    }
+
     public bool CheckIfCanGrow()
     {
-        if (!interactable) return false;
+        if (!interactable || unscalable) return false;
         return (!(touchingWalls >1) && !touchingCeiling && !touchingPlayerForceField) && (!scalableObjects.Any(obj => obj.touchingWalls > 0 || obj.touchingCeiling)  || scalableObjects.Count == 0) && !PlayerThresholds.Instance.isCeilingAbove;
     }
 
     public bool CheckIfCanShrink()
     {
-        if (!interactable) return false;
+        if (!interactable || unscalable) return false;
         return transform.localScale.x > minimumScale;
     }
 
     public void Grow(float growAmount, Vector3 playerPosition)
     {
+        rb.constraints = RigidbodyConstraints.None;
         this.playerPosition = playerPosition;
         if (CheckIfCanGrow()) destinationScale = destinationScale + growAmount;
 
@@ -59,8 +83,15 @@ public class ScalableObject : MonoBehaviour
 
     public void Shrink(float shrinkAmount, Vector3 playerPosition)
     {
+        rb.constraints = RigidbodyConstraints.None;
         this.playerPosition = playerPosition;
         if (CheckIfCanShrink()) destinationScale = Mathf.Max(minimumScale, destinationScale - shrinkAmount);
+    }
+
+    void Update()
+    {
+        if (collisionSoundTimeout > 0) collisionSoundTimeout -= Time.deltaTime;
+        if(isBeingHeld) rb.velocity = (followGrabPos.position - transform.position)*10;
     }
 
     private void FixedUpdate() 
@@ -83,14 +114,24 @@ public class ScalableObject : MonoBehaviour
         else if (transform.localScale.x < destinationScale) outlineManager.ChangeOutlineColor(ScaleState.Growing);
     }
 
-    public void SetIsKinematic(bool value)
+    virtual public void SetIsKinematic(bool value)
     {
+        rb.constraints = RigidbodyConstraints.None;
         rb.isKinematic = value;
     }
 
-    public bool GetIsKinematic()
+    virtual public void ObjectPickedUp(Transform holdPos)
     {
-        return rb.isKinematic;
+        rb.constraints = RigidbodyConstraints.None;
+        isBeingHeld = true;
+        followGrabPos = holdPos;
+        rb.useGravity = false;
+    }
+
+    public void ObjectDropped()
+    {
+        isBeingHeld = false;
+        rb.useGravity = true;
     }
 
     public void ApplyForce(Vector3 holdPosForward)

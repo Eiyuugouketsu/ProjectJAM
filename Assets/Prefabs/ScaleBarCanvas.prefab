@@ -283,8 +283,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8413849243667080001}
   - {fileID: 8478336303163654971}
+  - {fileID: 8413849243667080001}
   m_Father: {fileID: 4020729753703873832}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -466,7 +466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e259c053775a0184799cfabdca09811b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   barFrontGrow: {fileID: 9072360428847672482}
   barFrontShrink: {fileID: 558733834143093732}
 --- !u!1 &8882170598011155465

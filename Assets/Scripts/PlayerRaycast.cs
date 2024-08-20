@@ -13,18 +13,18 @@ public class PlayerRaycast : MonoBehaviour
     [SerializeField] float checkForGrabObjectDistance;
     [SerializeField] LayerMask layerMask;
     ScalableObject currentTarget;
-    ScalableObject currentGrabbableTarget;
+    // ScalableObject currentGrabbableTarget;
 
     private void Update()
     {
         if (PlayerThresholds.Instance.PlayerMode.GetPlayerState() == PlayerState.Scale)
         {
-            PerformRaycast();
+            if (PlayerThresholds.Instance.PlayerScalePower.GetState() != ScaleState.Growing
+            && PlayerThresholds.Instance.PlayerScalePower.GetState() != ScaleState.Shrinking) PerformRaycast();
         } else
         {
             PerformGrabRaycast();
         }
-                   
     }
 
     public void PerformRaycast(bool forceUpdate = false)
@@ -39,8 +39,8 @@ public class PlayerRaycast : MonoBehaviour
             if (currentTarget != null)
             {
                 currentTarget.GetComponent<OutlineManager>().ToggleOutlineActive(false);
+                OnMouseOverScalableObject?.Invoke(null);
             }
-            OnMouseOverScalableObject?.Invoke(null);
             currentTarget = null;
             return;
         }
@@ -48,11 +48,11 @@ public class PlayerRaycast : MonoBehaviour
         ScalableObject hitObject = hit.collider.gameObject.GetComponent<ScalableObject>();
         if (currentTarget != hitObject || forceUpdate)
         {
-            OnMouseOverScalableObject?.Invoke(hitObject);
             if (currentTarget != null)
             {
                 currentTarget.GetComponent<OutlineManager>().ToggleOutlineActive(false);
             }
+            if (currentTarget != hitObject) OnMouseOverScalableObject?.Invoke(hitObject);
             currentTarget = hitObject;
             currentTarget.GetComponent<OutlineManager>().ToggleOutlineActive(true);
         }
@@ -63,28 +63,27 @@ public class PlayerRaycast : MonoBehaviour
         Debug.DrawLine(cameraRoot.transform.position, cameraRoot.transform.position + (cameraRoot.forward).normalized * checkForGrabObjectDistance, Color.blue);
         RaycastHit grabHit;
         Physics.Raycast(cameraRoot.transform.position, cameraRoot.forward, out grabHit, checkForGrabObjectDistance, layerMask);
-
         if (!grabHit.collider || !grabHit.collider.gameObject)
         {
-            if (currentGrabbableTarget != null)
+            if (currentTarget != null)
             {
-                currentGrabbableTarget.GetComponent<OutlineManager>().ToggleOutlineActive(false);
+                currentTarget.GetComponent<OutlineManager>().ToggleOutlineActive(false);
+                OnMouseOverGrabbableObject?.Invoke(null);
             }
-            OnMouseOverGrabbableObject?.Invoke(null);
-            currentGrabbableTarget = null;
+            currentTarget = null;
             return;
         }
 
         ScalableObject grabObject = grabHit.collider.gameObject.GetComponent<ScalableObject>();
-        if (currentGrabbableTarget != grabObject)
+        if (currentTarget != grabObject)
         {
-            OnMouseOverGrabbableObject?.Invoke(grabObject);
-            if (currentGrabbableTarget != null)
+            if (currentTarget != null)
             {
-                currentGrabbableTarget.GetComponent<OutlineManager>().ToggleOutlineActive(false);
+                currentTarget.GetComponent<OutlineManager>().ToggleOutlineActive(false);
             }
-            currentGrabbableTarget = grabObject;
-            currentGrabbableTarget.GetComponent<OutlineManager>().ToggleOutlineActive(true);
+            if (currentTarget != grabObject) OnMouseOverGrabbableObject?.Invoke(grabObject);
+            currentTarget = grabObject;
+            currentTarget.GetComponent<OutlineManager>().ToggleOutlineActive(true);
         }
     }
 }

@@ -9,7 +9,6 @@ public enum ReticleState {
     Left,
     Right,
     Both,
-    Push,
     Blocked
 }
 
@@ -23,7 +22,6 @@ public class ReticleUI : MonoBehaviour
     [SerializeField] Image reticleImage;
     
     [SerializeField] Sprite defaultSprite;
-    [SerializeField] Sprite wSprite;
     [SerializeField] Sprite leftClickSprite;
     [SerializeField] Sprite rightClickSprite;
     [SerializeField] Sprite blockedSprite;
@@ -38,12 +36,15 @@ public class ReticleUI : MonoBehaviour
 
     ScalableObject currentTarget;
 
-    public void SubscribeToPlayerEvents()
+    void Start()
     {
         PlayerThresholds.Instance.PlayerRaycast.OnMouseOverScalableObject += Player_OnMouseOverScalableObject;
+        PlayerThresholds.Instance.PlayerRaycast.OnMouseOverGrabbableObject += Player_OnMouseOverScalableObject;
+        PlayerThresholds.Instance.PlayerMode.OnChangePlayerState += Player_OnChangePlayerState;
         PlayerThresholds.Instance.PlayerGrabAbility.OnObjectPickedUp += PlayerGrabAbility_OnObjectPickedUp;
         PlayerThresholds.Instance.PlayerGrabAbility.OnObjectDropped += PlayerGrabAbility_OnObjectDropped;
         PlayerThresholds.Instance.PlayerScalePower.OnUpdateScalePoints += PlayerScalePower_OnUpdateScalePoints;
+        PlayerThresholds.Instance.PlayerScalePower.OnChangeScaleState += PlayerScalePower_OnChangeScaleState;
         playerGrabAbility = PlayerThresholds.Instance.PlayerGrabAbility;
         playerScalePower = PlayerThresholds.Instance.PlayerScalePower;
         playerMode = PlayerThresholds.Instance.PlayerMode;
@@ -69,7 +70,7 @@ public class ReticleUI : MonoBehaviour
 
     private void SetReticleState(ReticleState newState)
     {
-        //Debug.Log($"newState: {newState}");
+        // Debug.Log($"newState: {newState}");
         if (state != ReticleState.Both && newState == ReticleState.Both) SetBothClickState();
         state = newState;
 
@@ -83,9 +84,6 @@ public class ReticleUI : MonoBehaviour
             case ReticleState.Right:
                 reticleImage.sprite = rightClickSprite;
                 break;
-            case ReticleState.Push:
-                reticleImage.sprite = wSprite;
-                break;
             case ReticleState.Blocked:
                 reticleImage.sprite = blockedSprite;
                 break;
@@ -97,7 +95,6 @@ public class ReticleUI : MonoBehaviour
 
     private void CheckForReticleState()
     {
-        // If player is holding an object do nothing
         if (playerGrabAbility.GetCurrentObject() != null && playerGrabAbility.GetIsHoldingObject())
         {
             float objectMass = playerGrabAbility.GetCurrentObject().GetMass();
@@ -113,29 +110,38 @@ public class ReticleUI : MonoBehaviour
 
         if (currentTarget != null)
         {
+            if (!currentTarget.GetIsInteractable())
+            {
+                SetReticleState(ReticleState.Blocked);
+                return;
+            }
+
             if (playerMode.GetPlayerState() == PlayerState.Grab)
             {
                 float objectMass = currentTarget.GetMass();
                 if (objectMass <= pickupThreshold)
                 {
                     SetReticleState(ReticleState.Right);
-                    return;
+                } else {
+                    SetReticleState(ReticleState.Blocked);
                 }
-
-                if (objectMass <= pushThreshold)
-                {
-                    SetReticleState(ReticleState.Push);
-                    return;
-                }
+                return;
             } else
             {
                 float currentScalePoints = playerScalePower.GetCurrentScalePoints();
                 bool canShrink = currentScalePoints > 0 && currentTarget.transform.localScale.x > currentTarget.GetMinimumScale();
                 bool canGrow = currentScalePoints < playerScalePower.GetMaxScalePoints();
 
-                if (canShrink && canGrow) SetReticleState(ReticleState.Both);
-                else if (!canShrink && canGrow) SetReticleState(ReticleState.Left);
-                else if (canShrink && !canGrow) SetReticleState(ReticleState.Right);
+                bool isTryingToGrow = playerScalePower.GetState() == ScaleState.Growing;
+                bool isTryingToShrink = playerScalePower.GetState() == ScaleState.Shrinking;
+
+                // Debug.Log($"canShrink: {canShrink}, canGrow: {canGrow}, isTryingToGrow: {isTryingToGrow}, isTryingToShrink: {isTryingToShrink}");
+
+                if ((isTryingToGrow && !canGrow) || (isTryingToShrink && !canShrink)) SetReticleState(ReticleState.Blocked);
+                else if (canShrink && canGrow) SetReticleState(ReticleState.Both);
+                else if (!canShrink && canGrow) SetReticleState(ReticleState.Right);
+                else if (canShrink && !canGrow) SetReticleState(ReticleState.Left);
+                else if (!canGrow && !canShrink) SetReticleState(ReticleState.Blocked);
                 return;
             }
         }
@@ -161,6 +167,16 @@ public class ReticleUI : MonoBehaviour
     }
 
     private void PlayerScalePower_OnUpdateScalePoints(float value)
+    {
+        CheckForReticleState();
+    }
+
+    private void PlayerScalePower_OnChangeScaleState(ScaleState newState)
+    {
+        CheckForReticleState();
+    }
+
+    private void Player_OnChangePlayerState(PlayerState newState)
     {
         CheckForReticleState();
     }

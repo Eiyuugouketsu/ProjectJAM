@@ -4,31 +4,18 @@ using UnityEngine;
 
 public class TransitionBox : MonoBehaviour
 {
-    [SerializeField] Trigger closeEnterDoorTrigger;
-    [SerializeField] Trigger openExitDoorTrigger;
-    [SerializeField] Trigger exitTransitionBoxTrigger;
-    [SerializeField] public Transform levelLoadPoint;
+    [SerializeField] Trigger transitionTrigger;
+    [SerializeField] AudioSource audioSource;
     void OnEnable()
     {
-        closeEnterDoorTrigger.OnEventTriggerEnter += CloseDoor;
-        openExitDoorTrigger.OnEventTriggerEnter += OpenDoor;
-        exitTransitionBoxTrigger.OnEventTriggerEnter += ExitTranitionBox;
+        transitionTrigger.OnEventTriggerEnter += TransitionToNextScene;
     }
 
-    void CloseDoor(Collider other)
+    void TransitionToNextScene(Collider other)
     {
+        audioSource.Play();
         GameManager.Instance.levelManager.LevelCompleted = true;
-        Destroy(closeEnterDoorTrigger);
-    }
-
-    void OpenDoor(Collider other)
-    {
-
-    }
-
-    void ExitTranitionBox(Collider other)
-    {
-        GameManager.Instance.levelManager.TransitionBoxExited = true;
+        Destroy(transitionTrigger.gameObject);
     }
 
     public void DisableAndDestroy()

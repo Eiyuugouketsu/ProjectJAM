@@ -13,9 +13,10 @@ public class PlayerGrabAbility : MonoBehaviour
     ScalableObject grabbedObject;
     public bool isHoldingObject = false;
     [SerializeField] private Transform holdPos;
+    [SerializeField] float throwForce;
 
     // Start is called before the first frame update
-    public void SubscribeToPlayerEvents() 
+    public void Start() 
     {
         PlayerThresholds.Instance.PlayerRaycast.OnMouseOverGrabbableObject += HandleMouseOverGrabbableObject; 
     }
@@ -50,14 +51,16 @@ public class PlayerGrabAbility : MonoBehaviour
         {
             DropObject();
         }
-        else if (currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.getMaxCarryMass() && currObject.GetIsInteractable()) { 
+        else if (currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.getMaxCarryMass() && currObject.GetIsInteractable()) {
+            Debug.Log("test");
             GrabObject();
         }
     }
 
     public void OnThrow()
     {
-        if (isHoldingObject && currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.GetMaxThrowMass())
+        // Debug.Log($"isHoldingObject: {isHoldingObject} currNull: {currObject != null} currmass: {currObject != null && currObject.GetMass() <= PlayerThresholds.Instance.GetMaxThrowMass()}");
+        if (isHoldingObject && grabbedObject != null && grabbedObject.GetMass() <= PlayerThresholds.Instance.GetMaxThrowMass())
         {
             ThrowObject();
         }
@@ -67,33 +70,24 @@ public class PlayerGrabAbility : MonoBehaviour
     {
         isHoldingObject = true;
         grabbedObject = currObject;
-
-        grabbedObject.SetIsKinematic(true);
-        grabbedObject.transform.position = holdPos.position;
-        grabbedObject.transform.SetParent(holdPos);
+        grabbedObject.ObjectPickedUp(holdPos);
         OnObjectPickedUp?.Invoke(grabbedObject);
     }
 
     private void DropObject()
     {
         isHoldingObject = false;
-
-        grabbedObject.SetIsKinematic(false);
-
-        grabbedObject.transform.SetParent(null);
+        grabbedObject.ObjectDropped();
         grabbedObject = null;
-
         OnObjectDropped?.Invoke();
     }
-
     private void ThrowObject()
     {
         isHoldingObject = false;
 
-        grabbedObject.SetIsKinematic(true);
-        grabbedObject.ApplyForce(holdPos.forward);
-
+        grabbedObject.SetIsKinematic(false);
         grabbedObject.transform.SetParent(null);
+        grabbedObject.ApplyForce(holdPos.forward.normalized * throwForce);
         OnObjectDropped?.Invoke();
     }
 
